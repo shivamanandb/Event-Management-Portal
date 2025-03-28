@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/registration.css">
+    <title>Ebolt - Registration</title>
+</head>
+<body>
+    <div class="card">
+        <h1 class="heading">Create your account</h1>
+        <p class="subheading">Your go-to solution for hassle-free event planning. Free to sign up.</p>
+
+        <div class="toggle-switch">
+            <div class="toggle-container">
+                <div class="toggle-background"></div>
+                <div class="toggle-option selected" id="attendee-option">Attendee</div>
+                <div class="toggle-option" id="organizer-option">Organizer</div>
+            </div>
+        </div>
+
+        <form id="registration-form">
+            <div class="input-group">
+                <input type="text" id="name" name="name" class="input-field" placeholder="Full Name" required>
+                <div class="input-icon">
+                    <img src="/assets/user.png" alt="logo" style="opacity: 0.6;" height="18px" width="20px" />
+                </div>
+            </div>
+
+            <!-- <div class="input-group">
+                <input type="text" id="username" name="username" class="input-field" placeholder="Username" required>
+                <div class="input-icon">
+                    <img src="/assets/user.png" alt="logo" style="opacity: 0.6;" height="18px" width="20px" />
+                </div>
+            </div> -->
+
+            <div class="input-group icon-baseline">
+                <input type="email" id="email" name="email"  class="input-field" placeholder="Email" required>
+                <div class="input-icon">
+                    <img src="/assets/email.png" style="opacity: 0.8;" alt="logo" />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="tel" id="phone" name="phoneNo" class="input-field" placeholder="Contact Number" required>
+                <div class="input-icon">
+                    <img src="/assets/phone.png" style="opacity: 0.6;"  height="18px" width="20px"   alt="logo" />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" name="password" class="input-field" placeholder="Password" required>
+                <div class="input-icon">
+                    <img src="/assets/password.png" style="opacity: 0.8;"  height="18px" width="20px"   alt="logo" />
+                </div>
+                <button type="button" class="toggle-password" id="toggle-password">
+                    <img src="/assets/open eye.png" style="opacity: 0.8;"  height="18px" width="20px"   alt="logo" />
+                </button>
+            </div>
+
+            <div id="organizer-fields" class="additional-fields">
+                <div class="input-group">
+                    <input type="text" id="org-name" name="organizationName" class="input-field" placeholder="Organization Name">
+                    <div class="input-icon">
+                        <img src="/assets/organization.png" style="opacity: 0.8;"  height="18px" width="20px"   alt="logo" />
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="org-desc" name="description" class="input-field" placeholder="Organization Description">
+                    <div class="input-icon">
+                    <img src="/assets/description.png" style="opacity: 0.8;"  height="18px" width="20px"   alt="logo" />
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="button">Sign Up</button>
+        </form>
+
+        <div class="divider">Or sign up with</div>
+
+        
+        <p class="login-text">Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+    <script src="/js/registration.js"></script>
+</body>
+</html>

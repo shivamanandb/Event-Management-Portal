@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Ebolt - Sign In</title>
+    
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">
+            
+            <span>Event Management Platform</span>
+        </div>
+    </div>
+
+    <div class="card">
+       
+        
+        <h1>Sign in with username</h1>
+        <p class="subtitle">Simplify event planning with seamless management and real-time tracking.</p>
+        
+        <form>
+            <div class="form-group">
+                <div class="input-field">
+                    <img src="/assets/user.png" alt="logo" height="20px" width="22px" style="opacity: 0.5;"/>
+                    <input type="email" placeholder="Email" name="email" id="email">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="input-field">
+                    <img src="/assets/password.png" alt="password" height="20px" width="22px"/>
+                    <input type="password" placeholder="Password" name="password" id="password">
+                    <span class="password-toggle" id="passwordToggle">
+                        <img src="/assets/close eye.png" style="opacity: 0.6;"  height="16px" width="17px"   alt="logo" />
+                    </span>
+                </div>
+            </div>
+            
+            <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div>
+            
+            <button type="submit" class="btn-primary">Login</button>
+
+        <p class="login-text">Don't have an account?   <a href="registration.html">Register here</a></p>
+
+            
+            <div class="divider">
+                <span>Or sign in with</span>
+            </div>
+            
+            <div class="social-buttons">
+                <button type="button" class="social-btn">
+                    <img src="/assets/google.png" alt="icon"/>
+                </button>
+                <button type="button" class="social-btn">
+                    <img src="/assets/facebook.png" alt="icon"/>
+                </button>
+                <button type="button" class="social-btn">
+                    <img src="/assets/apple.png" alt="icon"/>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/login.js"></script>
+</body>
+</html>

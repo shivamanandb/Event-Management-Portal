@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: #FF6347;
+            color: white;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #e05a40;
+        }
+        
+        .home-link {
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .home-link a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="home-link">
+            <button><a href="/html/homepage.html">Back To Home</a></button>
+        </div>
+        
+        <h1>Update Event</h1>
+        
+        <form id="eventForm">
+            <!-- Hidden field for event ID -->
+            <input type="hidden" id="eventId" name="eventId">
+            
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="e.g. Project Management Workshop" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    <option value="workshop">Workshop</option>
+                    <option value="conference">Conference</option>
+                    <option value="seminar">Seminar</option>
+                    <option value="training">Training</option>
+                    <option value="webinar">Webinar</option>
+                    <option value="networking">Networking</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" placeholder="Describe your event in detail..." minlength="50" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventDateTime">Event Start Date & Time:</label>
+                <input type="datetime-local" id="eventDateTime" name="eventDateTime" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventEndDateTime">Event End Date & Time:</label>
+                <input type="datetime-local" id="eventEndDateTime" name="eventEndDateTime" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" placeholder="Event venue or address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ticket-price">Ticket Price (INR):</label>
+                <input type="number" id="ticket-price" name="price" min="0" placeholder="Enter ticket price" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="totalSeats">Total Seats:</label>
+                <input type="number" id="totalSeats" name="totalSeats" min="1" placeholder="Enter total available seats" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="remainingSeats">Remaining Seats:</label>
+                <input type="number" id="remainingSeats" name="remainingSeat" min="0" placeholder="Enter initial remaining seats" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="thumbnail">Thumbnail:</label>
+                <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label for="eventStatus">Event Status:</label>
+                <select id="eventStatus" name="eventStatus" required>
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+            </div>
+            
+            <button type="submit">Update Event</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to get eventId
+        function getEventId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('id');
+            return eventId;
+        }
+        
+        // Function to populate form with event data
+        function populateForm(event) {
+            document.getElementById('eventId').value = event.id;
+            document.getElementById('title').value = event.title;
+            document.getElementById('category').value = event.category;
+            document.getElementById('description').value = event.description;
+            document.getElementById('eventDateTime').value = event.eventDateTime;
+            document.getElementById('eventEndDateTime').value = event.eventEndDateTime;
+            document.getElementById('location').value = event.location;
+            document.getElementById('ticket-price').value = event.price;
+            document.getElementById('totalSeats').value = event.totalSeats;
+            document.getElementById('remainingSeats').value = event.remainingSeat;
+            document.getElementById('eventStatus').value = event.eventStatus.toString();
+        }
+        
+        // Form validation function
+        function validateForm() {
+            const startTime = new Date(document.getElementById('eventDateTime').value);
+            const endTime = new Date(document.getElementById('eventEndDateTime').value);
+            const totalSeats = parseInt(document.getElementById('totalSeats').value);
+            const remainingSeats = parseInt(document.getElementById('remainingSeats').value);
+            
+            if (endTime <= startTime) {
+                alert('End time must be after start time');
+                return false;
+            }
+            
+            if (remainingSeats > totalSeats) {
+                alert('Remaining seats cannot be greater than total seats');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Load event data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const eventId = getEventId();
+            console.log("Event id: ", eventId)
+            
+            if (!eventId) {
+                alert('No event ID provided');
+                return;
+            }
+            
+            // Get event data from localStorage
+            const events = JSON.parse(localStorage.getItem('events'));
+            const eventData = events.find((e)=>e.id == eventId);
+
+            if (eventData && eventData.id == eventId) {
+                populateForm(eventData);
+            } else {
+                // In a real application, you would fetch the event data from the server
+                alert('Event data not found');
+            }
+            
+            // Set min date for event date inputs to today
+            const today = new Date();
+            const todayStr = today.toISOString().slice(0, 16);
+            document.getElementById('eventDateTime').min = todayStr;
+            document.getElementById('eventEndDateTime').min = todayStr;
+        });
+        
+        // Form submission
+        document.getElementById('eventForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Get form data
+            const formData = new FormData(this);
+            const eventData = {
+                id: formData.get('eventId')
+            };
+            
+            for (const [key, value] of formData.entries()) {
+                if (key === 'eventId') continue; // Already added
+                
+                if (key === 'eventStatus') {
+                    eventData[key] = value === 'true';
+                } else if (key === 'totalSeats' || key === 'remainingSeats' || key === 'price') {
+                    eventData[key] = parseInt(value, 10);
+                } else if (key !== 'thumbnail') {
+                    eventData[key] = value;
+                }
+            }
+            
+            try {
+                // Get the authentication token
+                const token = localStorage.getItem('token');
+                
+                if (!token) {
+                    alert('You need to be logged in to update an event');
+                    return;
+                }
+                
+                console.log('Updating event with data:', eventData);
+                
+                // Send update request to server
+                const response = await fetch(`http://localhost:8080/events/update/${eventData.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(eventData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to update event');
+                }
+                
+                // Show success message and redirect
+                alert('Event updated successfully!');
+
+                // update localStorage
+                const events = JSON.parse(localStorage.getItem('events'));
+                const remainingEvents = events.filter((event) => event.id != eventData.id);
+                remainingEvents.push(eventData);
+                localStorage.setItem('events', JSON.stringify(remainingEvents));
+                
+                window.location.href = 'homepage.html';
+                
+            } catch (error) {
+                console.error('Error updating event:', error);
+                alert('Failed to update event: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
