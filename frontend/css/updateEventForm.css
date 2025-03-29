@@ -46,7 +46,7 @@ textarea {
 }
 
 button {
-    background-color: #FF6347;
+    background-color: #209b97;
     color: white;
     padding: 12px 15px;
     border: none;
@@ -59,7 +59,7 @@ button {
 }
 
 button:hover {
-    background-color: #e05a40;
+    background-color: #209b97;
 }
 
 .home-link {

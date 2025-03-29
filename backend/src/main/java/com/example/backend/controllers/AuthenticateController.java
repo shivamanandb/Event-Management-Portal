@@ -81,9 +81,6 @@ public class AuthenticateController {
 
         User user = ((User)this.userDetailsService.loadUserByUsername(principal.getName()));
 
- 
-    
-
         // save organization into user
         OrganizerDetails organizerDetails = this.organizerDetailsRepository.findByUser(user);
         if(organizerDetails != null){

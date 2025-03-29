@@ -72,7 +72,7 @@
          }
          
          const eventResponse = await response.json();
-         console.log('Event created  dsdfds :', eventResponse);
+         console.log('Event created :', eventResponse);
          
          // Update events in localStorage
          const events = JSON.parse(localStorage.getItem('events')) || [];

@@ -41,13 +41,13 @@ body {
     filter: blur(50px);
 }
 
-.cloud-2 {
+/* .cloud-2 {
     width: 400px;
     height: 400px;
     bottom: -150px;
     right: -150px;
     filter: blur(60px);
-}
+} */
 
 .header {
     display: flex;

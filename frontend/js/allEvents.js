@@ -346,8 +346,30 @@ function displayFilteredEvents(events, selectedCategory = '') {
     setupDeleteButtons();
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     // Initialize navigation
+    const user = JSON.parse(localStorage.getItem('user'));
+    if(user && user.role == 'ATTENDEE') {
+        const response = await fetch('http://localhost:8080/events', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if(!response.ok){
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Event could not fetch');
+        }
+        
+        const data = await response.json();
+        console.log("data :", data)
+        
+        // Store events as JSON string
+        if(data){
+            localStorage.setItem('events', JSON.stringify(data));
+        }
+    }
     setupNavigation();
 
     // Retrieve all events from localStorage

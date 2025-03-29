@@ -30,7 +30,6 @@ public class BookingController {
             @PathVariable("paymentReferenceId") String paymentReferenceId,
             @RequestBody Booking booking) {
         
-        // System.out.println("Payment reference id: " + paymentReferenceId);
         Booking currBooking = this.bookingService.saveBooking(booking, paymentReferenceId);
         
         return ResponseEntity.ok(currBooking);

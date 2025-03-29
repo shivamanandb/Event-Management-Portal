@@ -1,3 +1,4 @@
+// Get eventId from params
 function getEventId() {
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('id');
@@ -14,11 +15,11 @@ function formatDateTime(isoString) {
 
         // Format date: "Month Day, Year"
         const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-        const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+        const formattedDate = date.toLocaleDateString('en-IN', dateOptions);
 
         // Format time: "H:MM AM/PM"
         const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
-        const formattedTime = date.toLocaleTimeString('en-US', timeOptions);
+        const formattedTime = date.toLocaleTimeString('en-IN', timeOptions);
 
         return { date: formattedDate, time: formattedTime };
     } catch (error) {

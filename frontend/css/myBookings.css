@@ -1,10 +1,9 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: #f4f4f4;
-    line-height: 1.6;
+    /* line-height: 1.5; */
 }
 
 * {
@@ -14,10 +13,7 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
-/* ************************************************* */
 
-
-/* Header & Navigation */
 header {
     display: flex;
     justify-content: space-between;
@@ -26,7 +22,7 @@ header {
     background-color: #fff;
 }
 
-/* Header & Navigation */
+
 .logo-container {
     display: flex;
     align-items: center;
@@ -62,7 +58,7 @@ nav {
 
 nav a {
     text-decoration: none;
-    color: #a60b0b;
+    color: #000000;
     margin-left: 2rem;
     font-size: 1rem;
     transition: color 0.3s;
@@ -100,8 +96,8 @@ nav a:hover {
 }
 
 
- /* Additional styles for the view all button */
- .view-all-container {
+/* Additional styles for the view all button */
+.view-all-container {
     text-align: center;
     margin-top: 30px;
     margin-bottom: 50px;
@@ -151,7 +147,7 @@ nav a:hover {
     right: 0;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 4px;
 }
@@ -196,26 +192,27 @@ nav a:hover {
     header {
         padding: 1rem 5%;
     }
-    
+
     .hero {
         flex-direction: column;
         padding: 3rem 5%;
     }
-    
-    .hero-content, .hero-image {
+
+    .hero-content,
+    .hero-image {
         width: 100%;
         text-align: center;
     }
-    
+
     .hero-image {
         margin-top: 2rem;
     }
-    
+
     .features {
         flex-wrap: wrap;
         padding: 2rem 5%;
     }
-    
+
     .feature {
         margin-bottom: 1rem;
         display: flex;
@@ -225,63 +222,11 @@ nav a:hover {
     }
 }
 
-/* *************************************************** */
-
-
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #000000;
-    margin-left: 2rem;
-    font-size: 1rem;
-    transition: color 0.3s;
-}
-
-nav a:hover {
-    color: #1a1a1a;
-}
-
-.log-in-btn {
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: 2rem;
-    font-size: 1rem;
-}
-
-
-.logo-container {
-    display: flex;
-    align-items: center;
-}
-
-.logo-container img {
-    margin-right: 10px;
-}
 
 .brand-name {
     font-size: 20px;
     font-weight: bold;
 }
-
-.tagline {
-    color: #666;
-    font-size: 12px;
-}
-
-/* nav a {
-    margin-right: 15px;
-    text-decoration: none;
-    color: #333;
-} */
 
 .container {
     max-width: 1200px;

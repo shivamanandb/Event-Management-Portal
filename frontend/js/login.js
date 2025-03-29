@@ -107,7 +107,7 @@ const fetchEvents = async(token) => {
         const user = JSON.parse(userStr);
         console.log("User:", user);
         
-        // Only fetch events if user is not an ATTENDEE
+        // Only fetch events if user is an ATTENDEE
         if(user && user.role == 'ATTENDEE') {
             const response = await fetch('http://localhost:8080/events', {
                 method: 'GET',

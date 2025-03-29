@@ -1,6 +1,7 @@
 package com.example.backend.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -62,6 +63,17 @@ public class Event {
     @ManyToOne
     @JoinColumn(nullable = false)
     private OrganizerDetails organizerDetails;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Booking> bookings;
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "event", fetch = FetchType.LAZY)
     @JsonIgnore
