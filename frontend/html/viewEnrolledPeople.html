@@ -4,66 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/viewEnrolledPeople.css"/>
     <title>View Enrolled People</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        #peopleTable {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        #peopleTable th,
-        #peopleTable td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        #peopleTable th {
-            background-color: #f2f2f2;
-            color: #333;
-        }
-
-        .filter-container {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .filter-input {
-            padding: 8px;
-            width: 200px;
-        }
-
-        .booked {
-            color: green;
-            font-weight: bold;
-        }
-
-        .pending {
-            color: orange;
-            font-weight: bold;
-        }
-
-        .cancelled {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
 </head>
 
 <body>
@@ -75,7 +17,6 @@
         <select id="statusFilter" class="filter-input">
             <option value="">All Booking Statuses</option>
             <option value="Booked">Booked</option>
-            <option value="Pending">Pending</option>
             <option value="Cancelled">Cancelled</option>
         </select>
     </div>
@@ -88,6 +29,7 @@
                 <th>Booking Status</th>
                 <th>Payment Reference ID</th>
                 <th>Event Date</th>
+                <th>Number of Booked Tickets</th>
             </tr>
         </thead>
         <tbody id="peopleTableBody">
@@ -95,122 +37,7 @@
         </tbody>
     </table>
 
-    <script>
-        
-        function getEventId() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const eventId = urlParams.get('id');
-            return eventId;
-        }
-
-        document.addEventListener('DOMContentLoaded', async()=>{
-            const eventId = getEventId();
-            const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:8080/eventDetails/get-events/${eventId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-            })
-
-            const enrolledPeople = await response.json();
-
-            console.log("data: ", enrolledPeople)
-
-        //     const enrolledPeople = [
-        //     {
-        //         name: "John Doe",
-        //         phone: "123-456-7890",
-        //         bookingStatus: "Booked",
-        //         eventName: "Tech Conference 2024",
-        //         eventDate: "2024-08-15"
-        //     },
-        //     {
-        //         name: "Jane Smith",
-        //         phone: "987-654-3210",
-        //         bookingStatus: "Pending",
-        //         eventName: "Leadership Workshop",
-        //         eventDate: "2024-09-20"
-        //     },
-        //     {
-        //         name: "Mike Johnson",
-        //         phone: "456-789-0123",
-        //         bookingStatus: "Booked",
-        //         eventName: "Coding Bootcamp",
-        //         eventDate: "2024-07-10"
-        //     },
-        //     {
-        //         name: "Emily Brown",
-        //         phone: "321-654-9870",
-        //         bookingStatus: "Cancelled",
-        //         eventName: "Design Seminar",
-        //         eventDate: "2024-06-25"
-        //     },
-        //     {
-        //         name: "David Wilson",
-        //         phone: "654-321-0987",
-        //         bookingStatus: "Pending",
-        //         eventName: "Marketing Summit",
-        //         eventDate: "2024-10-05"
-        //     }
-        // ];
-            // Initial table render
-            renderTable(enrolledPeople);
-        })
-
-        // Function to render the table
-        function renderTable(data) {
-            const tableBody = document.getElementById('peopleTableBody');
-            tableBody.innerHTML = ''; // Clear existing rows
-
-            data.forEach(person => {
-                const row = document.createElement('tr');
-
-                // Determine status class
-                let statusClass = '';
-                if(person.bookingStatus === true){
-                    statusClass = "color: green";
-                }else{
-                    statusClass = "color: red";
-                }
-
-                row.innerHTML = `
-                    <td>${person.name}</td>
-                    <td>${person.phone}</td>
-                    <td style="${statusClass}">${person.bookingStatus === true ? 'Booked' : 'Cancelled'}</td>
-                    <td>${person.paymentReferenceId}</td>
-                    <td>${person.eventDate}</td>
-                `;
-
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Function to filter table data
-        function filterTable() {
-            const nameFilter = document.getElementById('nameFilter').value.toLowerCase();
-            const eventFilter = document.getElementById('eventFilter').value.toLowerCase();
-            const statusFilter = document.getElementById('statusFilter').value;
-
-            const filteredData = enrolledPeople.filter(person => {
-                const nameMatch = person.name.toLowerCase().includes(nameFilter);
-                const eventMatch = person.eventName.toLowerCase().includes(eventFilter);
-                const statusMatch = statusFilter === '' || person.bookingStatus === statusFilter;
-
-                return nameMatch && eventMatch && statusMatch;
-            });
-
-            renderTable(filteredData);
-        }
-
-        // Add event listeners for filtering
-        document.getElementById('nameFilter').addEventListener('input', filterTable);
-        document.getElementById('eventFilter').addEventListener('input', filterTable);
-        document.getElementById('statusFilter').addEventListener('change', filterTable);
-
-        
-    </script>
+    <script src="/js/viewEnrolledPeople.js"></script>
 </body>
 
 </html>

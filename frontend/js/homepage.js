@@ -1,40 +1,157 @@
-// Sample event data
+
+// // Function to check whether user is logged in and set up appropriate UI elements
+// function setupNavigation() {
+//     // console.log("Setting up navigation...");
+    
+//     const navLinks = document.getElementById('nav-links');
+//     const authButtons = document.getElementById('auth-buttons');
+    
+//     // Check if elements exist
+//     if (!navLinks || !authButtons) {
+//         console.error("Required DOM elements not found");
+//         return;
+//     }
+    
+//     const token = localStorage.getItem("token");
+//     const userStr = localStorage.getItem('user');
+    
+//     // Clear existing content
+//     navLinks.innerHTML = '';
+//     authButtons.innerHTML = '';
+    
+//     // Add default navigation links
+//     navLinks.innerHTML = `
+//         <a href="homepage.html">Home</a>
+//         <a href="#">About</a>
+//         <a href="#">Contact</a>
+//     `;
+    
+//     if (token && userStr) {
+//         try {
+//             const user = JSON.parse(userStr);
+//             // console.log("User role:", user.role);
+            
+//             // Add role-specific navigation links
+//             if (user.role === 'ORGANIZER') {
+//                 navLinks.innerHTML += `
+//                     <a href="allEvents.html">Your Events</a>
+//                     <a href="eventCreationForm.html">Create Event</a>
+//                 `;
+//             } else if (user.role === 'ATTENDEE') {
+//                 navLinks.innerHTML += `
+//                     <a href="/html/myBookings.html">Your Bookings</a>
+//                     <a href="/html/allEvents.html">Events</a>
+
+//                 `;
+//             }
+            
+//             // Add user profile dropdown
+//             const userProfileDiv = document.createElement('div');
+//             userProfileDiv.className = 'user-profile';
+//             userProfileDiv.innerHTML = `
+//                 <div class="user-icon" onclick="toggleDropdown()">
+//                     <img width="20px" height="20px" src="/assets/user.png" alt="user_logo"/>
+//                 </div>
+//                 <div class="dropdown-content" id="userDropdown">
+//                     <a href="profile.html">View Profile</a>
+//                     <a href="#" onclick="logout()">Logout</a>
+//                 </div>
+//             `;
+            
+//             authButtons.appendChild(userProfileDiv);
+//             // console.log("Added user profile dropdown");
+            
+//         } catch (e) {
+//             console.error('Error parsing user data:', e);
+//             showLoginSignupButtons();
+//         }
+//     } else {
+//         showLoginSignupButtons();
+//         // console.log("Showing login/signup buttons");
+//     }
+// }
+
+// // Function to show login and signup buttons for logged out users
+// function showLoginSignupButtons() {
+//     const authButtons = document.getElementById('auth-buttons');
+    
+//     if (!authButtons) {
+//         console.error("Auth buttons container not found");
+//         return;
+//     }
+    
+//     // Create login button
+//     const loginBtn = document.createElement('div');
+//     loginBtn.className = 'log-in-btn';
+//     loginBtn.innerHTML = `
+//         <a href="login.html">Log In</a>
+//     `;
+    
+//     // Create signup button
+//     const signupBtn = document.createElement('a');
+//     signupBtn.href = 'registration.html';
+//     signupBtn.className = 'cta-button';
+//     signupBtn.textContent = 'Sign Up';
+    
+//     // Add to auth buttons container
+//     authButtons.appendChild(loginBtn);
+//     authButtons.appendChild(signupBtn);
+// }
+
+// // Function to toggle dropdown menu
+// function toggleDropdown() {
+//     const dropdown = document.getElementById("userDropdown");
+//     if (dropdown) {
+//         dropdown.classList.toggle("show");
+//     }
+// }
+
+// // Close the dropdown if the user clicks outside of it
+// window.onclick = function(event) {
+//     if (!event.target.matches('.user-icon') && 
+//         !event.target.matches('.user-icon svg') && 
+//         !event.target.matches('.user-icon path') && 
+//         !event.target.matches('.user-icon circle')) {
+        
+//         const dropdowns = document.getElementsByClassName("dropdown-content");
+//         for (let i = 0; i < dropdowns.length; i++) {
+//             const openDropdown = dropdowns[i];
+//             if (openDropdown.classList.contains('show')) {
+//                 openDropdown.classList.remove('show');
+//             }
+//         }
+//     }
+// }
+
 // Function to check whether user is logged in and set up appropriate UI elements
 function setupNavigation() {
-    // console.log("Setting up navigation...");
-    
     const navLinks = document.getElementById('nav-links');
     const authButtons = document.getElementById('auth-buttons');
-    
+
     // Check if elements exist
     if (!navLinks || !authButtons) {
         console.error("Required DOM elements not found");
         return;
     }
-    
+
     const token = localStorage.getItem("token");
     const userStr = localStorage.getItem('user');
-    
-    // Debug auth state
-    // console.log("Auth state:", token ? "Token found" : "No token", 
-    //             userStr ? "User data found" : "No user data");
-    
+
     // Clear existing content
     navLinks.innerHTML = '';
     authButtons.innerHTML = '';
-    
+
     // Add default navigation links
     navLinks.innerHTML = `
         <a href="homepage.html">Home</a>
         <a href="#">About</a>
         <a href="#">Contact</a>
     `;
-    
+
     if (token && userStr) {
         try {
             const user = JSON.parse(userStr);
-            // console.log("User role:", user.role);
-            
+
             // Add role-specific navigation links
             if (user.role === 'ORGANIZER') {
                 navLinks.innerHTML += `
@@ -44,11 +161,11 @@ function setupNavigation() {
             } else if (user.role === 'ATTENDEE') {
                 navLinks.innerHTML += `
                     <a href="/html/myBookings.html">Your Bookings</a>
-                    <a href="/html/allEvents.html">Events</a>
+                    <a href="allEvents.html">Events</a>
 
                 `;
             }
-            
+
             // Add user profile dropdown
             const userProfileDiv = document.createElement('div');
             userProfileDiv.className = 'user-profile';
@@ -64,43 +181,40 @@ function setupNavigation() {
                     <a href="#" onclick="logout()">Logout</a>
                 </div>
             `;
-            
+
             authButtons.appendChild(userProfileDiv);
-            // console.log("Added user profile dropdown");
-            
+
         } catch (e) {
             console.error('Error parsing user data:', e);
             showLoginSignupButtons();
         }
     } else {
         showLoginSignupButtons();
-        // console.log("Showing login/signup buttons");
     }
 }
 
 // Function to show login and signup buttons for logged out users
 function showLoginSignupButtons() {
     const authButtons = document.getElementById('auth-buttons');
-    
+
     if (!authButtons) {
         console.error("Auth buttons container not found");
         return;
     }
-    
+
     // Create login button
     const loginBtn = document.createElement('div');
     loginBtn.className = 'log-in-btn';
     loginBtn.innerHTML = `
-        <div class="log-in-icon"></div>
-        <a href="login.html">Log In</a>
+        <a class="log-in-btn" href="login.html">Log In</a>
     `;
-    
+
     // Create signup button
     const signupBtn = document.createElement('a');
     signupBtn.href = 'registration.html';
     signupBtn.className = 'cta-button';
     signupBtn.textContent = 'Sign Up';
-    
+
     // Add to auth buttons container
     authButtons.appendChild(loginBtn);
     authButtons.appendChild(signupBtn);
@@ -115,12 +229,12 @@ function toggleDropdown() {
 }
 
 // Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-    if (!event.target.matches('.user-icon') && 
-        !event.target.matches('.user-icon svg') && 
-        !event.target.matches('.user-icon path') && 
+window.onclick = function (event) {
+    if (!event.target.matches('.user-icon') &&
+        !event.target.matches('.user-icon svg') &&
+        !event.target.matches('.user-icon path') &&
         !event.target.matches('.user-icon circle')) {
-        
+
         const dropdowns = document.getElementsByClassName("dropdown-content");
         for (let i = 0; i < dropdowns.length; i++) {
             const openDropdown = dropdowns[i];

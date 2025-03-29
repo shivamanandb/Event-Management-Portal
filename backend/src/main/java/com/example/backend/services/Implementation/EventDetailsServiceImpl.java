@@ -79,6 +79,7 @@ public class EventDetailsServiceImpl implements EventDetailsService {
             eventDetailsDTO.setBookingStatus(booking.isBookingStatus());
             eventDetailsDTO.setPaymentReferenceId(booking.getMyOrder().getPaymentReferenceId());
             eventDetailsDTO.setEventDateTime(event.getEventDateTime());
+            eventDetailsDTO.setNumberOfBookedSeats(booking.getNumberOfBookedSeats());
 
             eventDetailsDTOs.add(eventDetailsDTO);
         });

@@ -8,6 +8,7 @@ public class EventDetailsDTO {
     private String name;
     private String phone;
     private Boolean bookingStatus;
+    private Long numberOfBookedSeats;
     private String eventName;
     private String paymentReferenceId;
 
@@ -17,6 +18,14 @@ public class EventDetailsDTO {
 
     public void setPaymentReferenceId(String paymentReferenceId) {
         this.paymentReferenceId = paymentReferenceId;
+    }
+
+    public Long getNumberOfBookedSeats() {
+        return numberOfBookedSeats;
+    }
+
+    public void setNumberOfBookedSeats(Long numberOfBookedSeats) {
+        this.numberOfBookedSeats = numberOfBookedSeats;
     }
 
     public String getName() {

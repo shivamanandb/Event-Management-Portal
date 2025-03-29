@@ -23,7 +23,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             @Param("organizerId") Long organizerId,
             @Param("eventId") Long eventId);
 
-    void deleteByEventId(Long id);
+    @Query(value = "DELETE FROM public.bookings where event_id = :eventId", nativeQuery = true)        
+    void deleteByEventId(@Param("eventId") Long eventId);
 
 }
 

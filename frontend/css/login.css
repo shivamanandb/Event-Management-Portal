@@ -17,6 +17,15 @@ body {
     overflow: hidden;
 }
 
+.home-btn {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: rgb(67, 57, 57);
+    border: 1px solid black;
+    padding: 10px 20px;
+    border-radius: 150px;
+}
+
 .cloud {
     position: absolute;
     background: rgba(255, 255, 255, 0.8);

@@ -139,7 +139,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional
     public void deleteEvent(Long id) {
         try {
             this.eventRepository.deleteById(id);
@@ -148,7 +147,7 @@ public class EventServiceImpl implements EventService {
             System.out.println("Error while deleting event : " + e.getMessage());
         }
     }
-
+ 
     @Override
     public List<Event> getOrganizerEvents(Long userId, Principal principal) throws Exception {
         
