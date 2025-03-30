@@ -291,7 +291,7 @@ function displayFilteredEvents(events, selectedCategory = '') {
         const remainingSeats = event.remainingSeat !== undefined ? event.remainingSeat : 0;
         const bookedSeats = totalSeats - remainingSeats;
         const today = new Date();
-        const todayStr = new Date(today.getTime() + 5.5*60*60*1000).toISOString().slice(0, 16);
+        const todayStr = new Date(today.getTime() + 5.5 * 60 * 60 * 1000).toISOString().slice(0, 16);
 
         // Build action buttons based on user role
         let actionButtonsHTML = '';
@@ -343,6 +343,9 @@ function displayFilteredEvents(events, selectedCategory = '') {
         ${categoryBadge}
         <h3>${event.title}</h3>
         <p class="event-date">${startDateTime.date} | ${startDateTime.time}</p>
+        <div>
+            <p> Price: <span style="color: red">${event.price} Rs.</span> </p>
+        </div>
         <p class="event-location">${event.location || 'Location TBD'}</p>
         <p>Seats: ${bookedSeats}/${totalSeats}</p>
         ${JSON.parse(localStorage.getItem('user')).role === 'ORGANIZER' ? `<a href="viewEnrolledPeople.html?id=${event.id}" class="event-link">View Enrolled People</a>` : ''}
