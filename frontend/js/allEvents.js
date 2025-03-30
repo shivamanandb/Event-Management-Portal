@@ -328,8 +328,6 @@ function displayFilteredEvents(events, selectedCategory = '') {
             }
         }
 
-
-
         // Create category badge if category exists
         const categoryBadge = event.category
             ? `<span class="category-badge">${event.category}</span>`
@@ -342,12 +340,17 @@ function displayFilteredEvents(events, selectedCategory = '') {
     <div class="event-details">
         ${categoryBadge}
         <h3>${event.title}</h3>
-        <p class="event-date">${startDateTime.date} | ${startDateTime.time}</p>
-        <div>
-            <p> Price: <span style="color: red">${event.price} Rs.</span> </p>
+        <div class="card">
+            <p class="event-date">${startDateTime.date} | ${startDateTime.time}</p>
+            <div>
+                <p> Price: <span style="color: red">${event.price} Rs.</span> </p>
+            </div>
+            ${JSON.parse(userStr).role == 'ATTENDEE' ? `<p>Organizer - ${event?.organizerDetails?.organizationName}</p>` : ''}
+            <div class="seat-location">
+                <p class="event-location">${event.location || 'Location TBD'}</p>
+                <p>Seats: ${bookedSeats}/${totalSeats}</p>
+            </div>
         </div>
-        <p class="event-location">${event.location || 'Location TBD'}</p>
-        <p>Seats: ${bookedSeats}/${totalSeats}</p>
         ${JSON.parse(localStorage.getItem('user')).role === 'ORGANIZER' ? `<a href="viewEnrolledPeople.html?id=${event.id}" class="event-link">View Enrolled People</a>` : ''}
         ${actionButtonsHTML}
     </div>

@@ -34,6 +34,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+// Function to format a date and time value safely
+function formatDateTime(dateTimeString) {
+    if (!dateTimeString) return { date: "Date not available", time: "Time not available" };
+    
+    try {
+        // Create a Date object
+        const date = new Date(dateTimeString);
+        
+        if (isNaN(date.getTime())) {
+            throw new Error("Invalid date");
+        }
+
+        // Extract date components
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // getMonth() returns 0-11, so add 1
+        const day = date.getDate();
+
+        // Extract time components
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+
+        // Format date as YYYY-MM-DD
+        const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+        // Format time as HH:MM
+        const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+        return { date: formattedDate, time: formattedTime };
+    } catch (e) {
+        console.error("Error formatting date/time:", e);
+        return { date: "Invalid date", time: "Invalid time" };
+    }
+}
+
 // Function to render the table
 function renderTable(data) {
     const tableBody = document.getElementById('peopleTableBody');
@@ -46,13 +80,13 @@ function renderTable(data) {
         // Determine status class and booked tickets
         let statusClass = person.bookingStatus === true ? "color: green" : "color: red";
         const numberOfTickets = person.numberOfBookedSeats || 1; // Default to 1 if not specified
-
+        const {date: formattedDate, time: formattedTime} = formatDateTime(person.eventDateTime)
         row.innerHTML = `
                     <td>${person.name}</td>
                     <td>${person.phone}</td>
                     <td style="${statusClass}">${person.bookingStatus === true ? 'Booked' : 'Cancelled'}</td>
                     <td>${person.paymentReferenceId}</td>
-                    <td>${person.eventDate}</td>
+                    <td>${formattedDate} | ${formattedTime}</td>
                     <td>${numberOfTickets}</td>
                 `;
 

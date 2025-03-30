@@ -442,3 +442,15 @@ nav a:hover {
     color: white;
     background-color: #4285f4;
 }
+
+.seat-location{
+    display: flex;
+    align-items: center;
+    justify-content:space-between
+}
+
+.card {
+    display: flex;
+    flex-flow: column;
+    gap: 5px;
+}

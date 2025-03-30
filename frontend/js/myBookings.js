@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 `;
     }
 
-    // Setup additional event listeners
-    setupEventListeners();
+    // // Setup additional event listeners
+    // setupEventListeners();
 });
 
 // Function to check whether user is logged in and set up appropriate UI elements
@@ -248,7 +248,7 @@ function displayBookings(bookings) {
         console.log("event:", event)
         const eventDateTime = formatDateTime(event.eventDateTime);
         const ticketBookedDate = formatDateTime(event.bookingDateTime)
-        const imagePath = '' || `/assets/events/event${Math.floor(Math.random() * 5) + 1}.jpg`;
+        const imagePath = '';
 
 
         // Determine status color and text
