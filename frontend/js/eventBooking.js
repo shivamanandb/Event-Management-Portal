@@ -84,6 +84,15 @@ document.addEventListener('DOMContentLoaded', async function () {
         checkoutBtn.style.cursor = "not-allowed";
     }
 
+    // check if event start date and time is eqaul to the current date and time
+    const today = new Date();
+    const todayStr = new Date(today.getTime()+5.5*60*60*1000).toISOString().slice(0, 16)
+    if(todayStr >= event.eventDateTime){
+        checkoutBtn.disabled = true;
+        checkoutBtn.style.backgroundColor = "#cccccc";
+        checkoutBtn.style.cursor = "not allowed";
+    }
+
     checkoutBtn.addEventListener('click', async () => {
         const quantityValue = parseInt(document.getElementById('quantity').textContent);
         let amount = event.price * quantityValue;

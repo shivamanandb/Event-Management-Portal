@@ -143,11 +143,11 @@ function formatDateTime(isoString) {
 
         // Format date: "Month Day, Year"
         const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-        const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+        const formattedDate = date.toLocaleDateString('en-IN', dateOptions);
 
         // Format time: "H:MM AM/PM"
         const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
-        const formattedTime = date.toLocaleTimeString('en-US', timeOptions);
+        const formattedTime = date.toLocaleTimeString('en-IN', timeOptions);
 
         return { date: formattedDate, time: formattedTime };
     } catch (error) {
@@ -290,6 +290,8 @@ function displayFilteredEvents(events, selectedCategory = '') {
         const totalSeats = event.totalSeats ? event.totalSeats : 0;
         const remainingSeats = event.remainingSeat !== undefined ? event.remainingSeat : 0;
         const bookedSeats = totalSeats - remainingSeats;
+        const today = new Date();
+        const todayStr = new Date(today.getTime() + 5.5*60*60*1000).toISOString().slice(0, 16);
 
         // Build action buttons based on user role
         let actionButtonsHTML = '';
@@ -310,7 +312,14 @@ function displayFilteredEvents(events, selectedCategory = '') {
                 <a href="#" class="event-btn book-btn" style="background-color: #cccccc; cursor: not-allowed; pointer-events: none;">Sold Out</a>
             </div>
         `;
-            } else {
+            }
+            else if (todayStr >= event.eventDateTime) {
+                actionButtonsHTML = `
+            <div class="event-actions">
+                <a href="#" class="event-btn book-btn" style="background-color: #cccccc; cursor: not-allowed; pointer-events: none;">Booking Over</a>
+            </div>`
+            }
+            else {
                 actionButtonsHTML = `
             <div class="event-actions">
                 <a href="eventBooking.html?id=${event.id}" class="event-btn book-btn">Book Now</a>
@@ -318,6 +327,8 @@ function displayFilteredEvents(events, selectedCategory = '') {
         `;
             }
         }
+
+
 
         // Create category badge if category exists
         const categoryBadge = event.category
@@ -349,7 +360,7 @@ function displayFilteredEvents(events, selectedCategory = '') {
 document.addEventListener('DOMContentLoaded', async function () {
     // Initialize navigation
     const user = JSON.parse(localStorage.getItem('user'));
-    if(user && user.role == 'ATTENDEE') {
+    if (user && user.role == 'ATTENDEE') {
         const response = await fetch('http://localhost:8080/events', {
             method: 'GET',
             headers: {
@@ -357,16 +368,16 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         });
 
-        if(!response.ok){
+        if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Event could not fetch');
         }
-        
+
         const data = await response.json();
         console.log("data :", data)
-        
+
         // Store events as JSON string
-        if(data){
+        if (data) {
             localStorage.setItem('events', JSON.stringify(data));
         }
     }

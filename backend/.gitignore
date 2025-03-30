@@ -34,7 +34,7 @@ build/
 
 # Environment and Configuration
 .env
-/src/main/resources/application.properties
+**/application.properties
 application.yml
 application-dev.properties
 application-prod.properties
