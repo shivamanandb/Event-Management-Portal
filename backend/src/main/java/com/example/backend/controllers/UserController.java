@@ -53,38 +53,7 @@ public class UserController {
     public User createUser(@RequestBody User user, @RequestParam String role) {
         return this.userService.createUser(user, role);
     }
-
-    // @PostMapping("/create-order")
-    // public String createOrder(@RequestBody Map<String, Object> data) throws
-    // RazorpayException{
-    // System.out.println(data);
-    // int amount = Integer.parseInt(data.get("amount").toString());
-
-    // RazorpayClient client = new RazorpayClient("rzp_test_V8mM0kjKmdKKSA",
-    // "0beBt7FFshdzV3J4vIhujp9k");
-    // JSONObject options = new JSONObject();
-    // options.put("amount", amount*100);
-    // options.put("currency", "INR");
-    // options.put("receipt", "txn_12345");
-
-    // // creating new order
-    // Order order = client.orders.create(options);
-    // System.out.println("Order: " + order);
-
-    // // Saving order details
-    // MyOrder myOrder = new MyOrder(); // Changed to local variable instead of
-    // class field
-
-    // // Properly handle type conversion from JSONObject responses
-    // myOrder.setAmount((Integer) order.get("amount"));
-    // myOrder.setBookingOrderId((String) order.get("id"));
-    // myOrder.setPaymentReferenceId(null);
-    // myOrder.setPaymentStatus("created");
-    // myOrder.setPaymentReceipt((String) order.get("receipt"));
-
-    // this.myOrderRepository.save(myOrder);
-    // return order.toString();
-    // }
+    
     @PostMapping("/create-order")
     public ResponseEntity<?> createOrder(@RequestBody Map<String, Object> data) throws RazorpayException {
         System.out.println(data);

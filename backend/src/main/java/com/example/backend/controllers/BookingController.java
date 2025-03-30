@@ -43,7 +43,6 @@ public class BookingController {
 
     @PutMapping("/cancel/{bookingId}")
     public Booking cancelBooking(@PathVariable("bookingId") Long bookingId){
-        System.out.println("Hekllllo");
         return this.bookingService.cancelBooking(bookingId);
     }
 }
