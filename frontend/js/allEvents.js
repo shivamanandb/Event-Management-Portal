@@ -52,7 +52,7 @@ function setupNavigation() {
                     </svg>
                 </div>
                 <div class="dropdown-content" id="userDropdown">
-                    <a href="profile.html">View Profile</a>
+                    <a href="#">View Profile</a>
                     <a href="#" onclick="logout()">Logout</a>
                 </div>
             `;
@@ -386,12 +386,37 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (data) {
             localStorage.setItem('events', JSON.stringify(data));
         }
+    } else if (user && user.role == 'ORGANIZER') {
+        const response = await fetch(`http://localhost:8080/events/organizer/${user.id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Event could not fetch');
+        }
+
+        const data = await response.json();
+        console.log("data :", data)
+
+        // Store events as JSON string
+        if (data) {
+            localStorage.setItem('events', JSON.stringify(data));
+        }
     }
     setupNavigation();
 
     // Retrieve all events from localStorage
     const allEvents = JSON.parse(localStorage.getItem('events')) || [];
 
+    // Heading should be different for Attendee and Organizer
+    const heading = document.getElementById('heading');
+    
+    heading.innerHTML = `${user.role == 'ATTENDEE'? 'All Events' : 'Your Events'}`
 
     // Populate the category filter
     populateCategoryFilter(allEvents);

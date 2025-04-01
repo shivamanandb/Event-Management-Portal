@@ -191,9 +191,14 @@ nav a:hover {
 }
 
 @media (max-width: 768px) {
+
+    *{
+        overflow-x: hidden;
+    }
     header {
         padding: 1rem 5%;
     }
+    
     
     .hero {
         flex-direction: column;
@@ -249,9 +254,9 @@ nav a:hover {
 }
 
 .page-header h1 {
-    font-size: 36px;
+    font-size: 25px;
     color: #333;
-    margin-bottom: 15px;
+    margin-bottom: 1px;
 }
 
 .event-grid {

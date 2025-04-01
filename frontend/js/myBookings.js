@@ -209,7 +209,7 @@ function localDateTimeToISOString(localDateTime) {
 // Format date and time
 function formatDateTime(isoString) {
     if (!isoString) {
-        return { date: 'Date TBD', time: 'Time TBD' };
+        return { date: 'Date', time: 'Time' };
     }
 
     try {
@@ -247,7 +247,7 @@ function displayBookings(bookings) {
 
         console.log("event:", event)
         const eventDateTime = formatDateTime(event.eventDateTime);
-        const ticketBookedDate = formatDateTime(event.bookingDateTime)
+        const ticketBookedDate = formatDateTime(booking.bookingDateTime)
         const imagePath = '';
 
 
@@ -271,9 +271,7 @@ function displayBookings(bookings) {
         const bookingCard = document.createElement('div');
         bookingCard.className = 'booking-card';
         bookingCard.innerHTML = `
-    <div class="booking-image">
-        <img src="${imagePath}" alt="${event.title}">
-    </div>
+    
     <div class="booking-details">
         <div class="booking-header">
             <h3>${event.title}</h3>
