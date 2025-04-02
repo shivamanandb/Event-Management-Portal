@@ -7,8 +7,9 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.backend.DTOs.EnrolledPeopleDTO;
 import com.example.backend.models.Booking;
-import com.example.backend.models.EnrolledPeopleDTO;
 import com.example.backend.models.Event;
 import com.example.backend.models.OrganizerDetails;
 import com.example.backend.models.User;

@@ -4,7 +4,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
-import com.example.backend.models.EnrolledPeopleDTO;
+import com.example.backend.DTOs.EnrolledPeopleDTO;
 import com.example.backend.models.Event;
 // import com.example.backend.models.EventDetails;
 

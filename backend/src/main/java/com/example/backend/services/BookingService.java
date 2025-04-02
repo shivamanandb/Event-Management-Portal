@@ -1,8 +1,8 @@
 package com.example.backend.services;
 import java.util.Set;
 
+import com.example.backend.DTOs.BookingDetailsDTO;
 import com.example.backend.models.Booking;
-import com.example.backend.models.BookingDetailsDTO;
 
 public interface BookingService {
    

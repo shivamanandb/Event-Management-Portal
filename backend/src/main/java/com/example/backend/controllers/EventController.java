@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.models.EnrolledPeopleDTO;
+import com.example.backend.DTOs.EnrolledPeopleDTO;
 import com.example.backend.models.Event;
 import com.example.backend.services.EventService;
 
