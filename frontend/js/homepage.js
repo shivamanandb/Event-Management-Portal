@@ -2,6 +2,7 @@
 function setupNavigation() {
     const navLinks = document.getElementById('nav-links');
     const authButtons = document.getElementById('auth-buttons');
+    const dropDown = document.querySelector('.drop-down');
 
     // Check if elements exist
     if (!navLinks || !authButtons) {
@@ -37,7 +38,6 @@ function setupNavigation() {
                 navLinks.innerHTML += `
                     <a href="/html/myBookings.html">Your Bookings</a>
                     <a href="allEvents.html">Events</a>
-
                 `;
             }
 
@@ -68,7 +68,7 @@ function setupNavigation() {
     }
 }
 
-// Function to show login and signup buttons for logged out users
+
 function showLoginSignupButtons() {
     const authButtons = document.getElementById('auth-buttons');
 
@@ -93,6 +93,16 @@ function showLoginSignupButtons() {
     // Add to auth buttons container
     authButtons.appendChild(loginBtn);
     authButtons.appendChild(signupBtn);
+}
+
+
+// Function to toggle the mobile menu
+function toggleMobileMenu() {
+    const dropDown = document.querySelector('.drop-down');
+    
+    if (dropDown) {
+        dropDown.classList.toggle('active');
+    }
 }
 
 // Function to toggle dropdown menu
@@ -376,9 +386,16 @@ const setupDeleteButtons = () => {
     });
 };
 
+// Set up menu bar click listener
+const menuBar = document.getElementById('menu-bar');
+if (menuBar) {
+    menuBar.addEventListener('click', toggleMobileMenu);
+}
+   
 // Make functions available globally
 window.toggleDropdown = toggleDropdown;
 window.logout = logout;
+window.toggleMobileMenu = toggleMobileMenu;
 window.setupDeleteButtons = setupDeleteButtons;
 
 // Check if page was redirected after login
