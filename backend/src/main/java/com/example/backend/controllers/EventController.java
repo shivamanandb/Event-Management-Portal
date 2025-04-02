@@ -2,6 +2,8 @@ package com.example.backend.controllers;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.backend.models.EnrolledPeopleDTO;
 import com.example.backend.models.Event;
-import com.example.backend.models.EventDetails;
 import com.example.backend.services.EventService;
 
 @RestController
@@ -54,6 +56,13 @@ public class EventController {
         System.out.println("userId :" + userId);
         return this.eventService.getOrganizerEvents(userId, principal);
     }
+
+    @GetMapping("/getEnrolledPeople/{eventId}")
+    public Set<EnrolledPeopleDTO> getEnrolledPeople(@PathVariable("eventId") Long eventId){
+
+        return this.eventService.getEnrolledPeople(eventId);
+    }
+    
 
     @DeleteMapping("/{eventId}")
     public ResponseEntity<?> deleteEvent(@PathVariable Long eventId) {

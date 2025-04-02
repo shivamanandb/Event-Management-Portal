@@ -1,62 +1,62 @@
-package com.example.backend.models;
+// package com.example.backend.models;
 
-import java.util.Set;
+// import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+// import jakarta.persistence.Entity;
+// import jakarta.persistence.FetchType;
+// import jakarta.persistence.GeneratedValue;
+// import jakarta.persistence.GenerationType;
+// import jakarta.persistence.Id;
+// import jakarta.persistence.ManyToOne;
 
-@Entity
-public class EventDetails {
+// @Entity
+// public class EventDetails {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
+//     @ManyToOne(fetch = FetchType.EAGER)
+//     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Event event;
+//     @ManyToOne(fetch = FetchType.EAGER)
+//     private Event event;
 
-    @ManyToOne
-    private OrganizerDetails organizerDetails;
+//     @ManyToOne
+//     private OrganizerDetails organizerDetails;
 
-    public Long getId() {
-        return id;
-    }
+//     public Long getId() {
+//         return id;
+//     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+//     public void setId(Long id) {
+//         this.id = id;
+//     }
 
-    public User getUser() {
-        return user;
-    }
+//     public User getUser() {
+//         return user;
+//     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+//     public void setUser(User user) {
+//         this.user = user;
+//     }
 
-    public Event getEvent() {
-        return event;
-    }
+//     public Event getEvent() {
+//         return event;
+//     }
 
-    public void setEvent(Event event) {
-        this.event = event;
-    }
+//     public void setEvent(Event event) {
+//         this.event = event;
+//     }
 
-    public OrganizerDetails getOrganizerDetails() {
-        return organizerDetails;
-    }
+//     public OrganizerDetails getOrganizerDetails() {
+//         return organizerDetails;
+//     }
 
-    public void setOrganizerDetails(OrganizerDetails organizerDetails) {
-        this.organizerDetails = organizerDetails;
-    }
+//     public void setOrganizerDetails(OrganizerDetails organizerDetails) {
+//         this.organizerDetails = organizerDetails;
+//     }
 
 
 
-}
+// }

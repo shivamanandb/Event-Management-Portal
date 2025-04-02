@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,11 +23,11 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
-    private Long eventId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Event event;
     
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
     
     @Column(nullable = false)
     private LocalDateTime bookingDateTime;
@@ -37,7 +38,7 @@ public class Booking {
     @Column(nullable = false)
     private Long numberOfBookedSeats = 1L;
     
-    @OneToOne // Chan  ged from @Column to @OneToOne
+    @OneToOne // Changed from @Column to @OneToOne
     @JoinColumn(name = "order_id")
     @JsonManagedReference  // Indicates this side can be serialized
     private MyOrder myOrder;
@@ -55,13 +56,7 @@ public class Booking {
         this.id = id;
     }
     
-    public Long getEventId() {
-        return eventId;
-    }
-    
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
+   
     
     public LocalDateTime getBookingDateTime() {
         return bookingDateTime;
@@ -97,12 +92,24 @@ public class Booking {
     }
 
 
-    public Long getUserId() {
-        return userId;
+    public Event getEvent() {
+        return event;
     }
 
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setEvent(Event event) {
+        this.event = event;
     }
+
+
+    public User getUser() {
+        return user;
+    }
+
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    
 }

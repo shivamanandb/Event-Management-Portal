@@ -5,13 +5,9 @@ import com.example.backend.repository.MyOrderRepository;
 import com.example.backend.services.UserService;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import com.razorpay.*;
-
-import jakarta.transaction.Transactional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +35,6 @@ public class UserController {
 
     @Autowired
     private MyOrderRepository myOrderRepository;
-
-    private MyOrder myBooking;
 
     private Event event;
 
@@ -96,7 +90,6 @@ public class UserController {
         try {
             // Find the order
             MyOrder myOrder = this.myOrderRepository.findByBookingOrderId(data.get("bookingOrderId").toString());
-            System.out.println("order id: " + myOrder.getPaymentReceipt());
             if (myOrder == null) {
                 return ResponseEntity.badRequest().body(Map.of("message", "Order not found"));
             }

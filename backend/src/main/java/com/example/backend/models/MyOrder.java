@@ -1,6 +1,7 @@
 package com.example.backend.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +20,7 @@ public class MyOrder {
     private Integer amount;
     private String paymentReceipt;
    
-    @OneToOne(mappedBy = "myOrder") 
+    @OneToOne(mappedBy = "myOrder", cascade = CascadeType.ALL) 
     @JsonBackReference  // Indicates the back reference side
     private Booking booking;
 

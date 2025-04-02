@@ -181,30 +181,6 @@ function logout() {
     // Force reload to ensure the page updates
     window.location.href = 'homepage.html';
 }
-/**
-* Converts a LocalDateTime to an ISO 8601 formatted string
-* @param {LocalDateTime} localDateTime - The LocalDateTime to convert
-* @returns {string} ISO 8601 formatted string
-*/
-function localDateTimeToISOString(localDateTime) {
-    // Ensure the input is a valid LocalDateTime object
-    if (!(localDateTime instanceof Date)) {
-        throw new Error('Input must be a Date object');
-    }
-
-    // Convert to ISO string 
-    // toISOString() converts to UTC, so we'll use a custom method to preserve local time
-    const year = localDateTime.getFullYear();
-    const month = String(localDateTime.getMonth() + 1).padStart(2, '0');
-    const day = String(localDateTime.getDate()).padStart(2, '0');
-    const hours = String(localDateTime.getHours()).padStart(2, '0');
-    const minutes = String(localDateTime.getMinutes()).padStart(2, '0');
-    const seconds = String(localDateTime.getSeconds()).padStart(2, '0');
-    const milliseconds = String(localDateTime.getMilliseconds()).padStart(3, '0');
-
-    // Format: YYYY-MM-DDTHH:mm:ss.sssZ
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
-}
 
 // Format date and time
 function formatDateTime(isoString) {
@@ -243,11 +219,11 @@ function displayBookings(bookings) {
     }
 
     bookings.forEach(booking => {
-        const event = JSON.parse(localStorage.getItem('events')).find(event => event.id == booking.eventId)
+        // const event = JSON.parse(localStorage.getItem('events')).find(event => event.id == booking.eventId)
 
         console.log("event:", event)
-        const eventDateTime = formatDateTime(event.eventDateTime);
-        const ticketBookedDate = formatDateTime(booking.bookingDateTime)
+        const eventDateTime = formatDateTime(booking?.event?.eventDateTime);
+        const ticketBookedDate = formatDateTime(booking.bookingDateTime);
         const imagePath = '';
 
 
@@ -274,7 +250,7 @@ function displayBookings(bookings) {
     
     <div class="booking-details">
         <div class="booking-header">
-            <h3>${event.title}</h3>
+            <h3>${booking?.event?.title}</h3>
             <span class="booking-status ${statusClass}">${statusText}</span>
         </div>
         <div class="booking-meta">
@@ -282,12 +258,13 @@ function displayBookings(bookings) {
             <div> 
                 <b>Ticket Booking Date And Time: </b><span>${ticketBookedDate.date} | ${ticketBookedDate.time}</span>
             </div>
-            <p>Location: ${event.location || 'Location TBD'}</p>
-            <p>Tickets: ${booking.numberOfBookedSeats} seat(s)</p>
+            <p><b>Location:</b> ${booking?.event?.location || 'Location TBD'}</p>
+            <p><b>Tickets:</b> ${booking.numberOfBookedSeats} seat(s)</p>
+            <p><b>Payment Reference ID:</b> ${booking?.myOrder?.paymentReferenceId} </p>
         </div>
         <div class="booking-actions">
-            <a href="/event-details.html?id=${event.id}" class="booking-btn view-details-btn">View Details</a>
-            ${booking.bookingStatus === true ?
+            <a href="/event-details.html?id=${booking?.event?.id}" class="booking-btn view-details-btn">View Details</a>
+            ${booking?.bookingStatus === true ?
                 `<a href="#" class="booking-btn cancel-booking-btn" data-id="${booking.id}">Cancel Booking</a>`
                 : ''
             }
@@ -334,37 +311,12 @@ function setupCancelBookingButtons(bookings) {
                     const cancelledEventData = await response.json();
                     console.log("cancelled event data : ", cancelledEventData)
 
-                    // update remaining seat into localStorage
-                    let eventData = JSON.parse(localStorage.getItem('events'));
-                    const currEventData = eventData.find((e)=> e.id == cancelledEventData.eventId)
-                    console.log("Current Event Data : ", currEventData);
-                    console.log("Cancelled Event Data : ", cancelledEventData);
-                    currEventData.remainingSeat += cancelledEventData.numberOfBookedSeats;
-                    localStorage.removeItem('events')
-                    eventData = eventData.filter((e) => e.id != cancelledEventData.eventId)
-                    eventData.push(currEventData)
-                    localStorage.setItem('events', JSON.stringify(eventData))
+                    // Getting new data with updated number of seats
+                    const currEventData = bookings.filter(booking => booking?.id != cancelledEventData?.id);
+                    bookings.push(currEventData);
 
-                    // Refetch bookings to ensure most up-to-date data
-                    const user = JSON.parse(localStorage.getItem('user'));
-                    const refreshResponse = await fetch(`http://localhost:8080/bookings/all/${user.id}`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        }
-                    });
-
-                    if (!refreshResponse.ok) {
-                        throw new Error('Failed to refresh bookings after cancellation');
-                    }
-
-                    const updatedBookings = await refreshResponse.json();
-                    console.log("updated bookings: ", updatedBookings)
-
-                    // Display updated bookings
-                    displayBookings(updatedBookings);
-
+                    window.location.href = "/html/myBookings.html"
+                    
                 } catch (error) {
                     console.error('Error cancelling booking:', error);
 

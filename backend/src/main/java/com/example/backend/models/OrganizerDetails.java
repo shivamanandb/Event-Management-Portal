@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,10 +31,6 @@ public class OrganizerDetails {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "organizerDetails")
-    @JsonIgnore
-    private Set<EventDetails> event_details;
 
     @Column(nullable = false)
     private String organizationName;
@@ -80,14 +75,6 @@ public class OrganizerDetails {
 
     public String getDescription() { 
         return description; 
-    }
-
-    public Set<EventDetails> getEvent_details() {
-        return event_details;
-    }
-
-    public void setEvent_details(Set<EventDetails> event_details) {
-        this.event_details = event_details;
     }
 
     public void setDescription(String description) { 

@@ -21,9 +21,7 @@ import com.example.backend.repository.OrganizerDetailsRepository;
 import com.example.backend.configuration.JwtUtils;
 import com.example.backend.models.JwtRequest;
 import com.example.backend.models.JwtResponse;
-import com.example.backend.models.OrganizerDetails;
 import com.example.backend.models.User;
-import com.example.backend.repository.OrganizerDetailsRepository;
 import com.example.backend.services.Implementation.UserDetailsServiceImpl;
 
 @RestController
@@ -86,6 +84,7 @@ public class AuthenticateController {
         if(organizerDetails != null){
             user.setOrganizationName(organizerDetails.getOrganizationName());
             user.setDescription(organizerDetails.getDescription());
+            user.setOrganizerId(organizerDetails.getId());
         }
         
         // password set to null

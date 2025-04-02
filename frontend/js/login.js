@@ -52,7 +52,7 @@ form.addEventListener('submit', async (event) => {
         }
 
         await fetchCurrentUser(data.token);
-        
+            
         await fetchEvents(data.token);
 
         // handle successful login

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
 
     try {
-        const response = await fetch(`http://localhost:8080/eventDetails/get-events/${eventId}`, {
+        const response = await fetch(`http://localhost:8080/events/getEnrolledPeople/${eventId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

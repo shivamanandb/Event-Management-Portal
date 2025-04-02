@@ -1,6 +1,5 @@
 package com.example.backend.controllers;
 
-import java.security.Principal;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.models.Booking;
+import com.example.backend.models.BookingDetailsDTO;
 import com.example.backend.services.BookingService;
 
 @RestController
@@ -28,9 +28,9 @@ public class BookingController {
     @PostMapping("/create-booking/{paymentReferenceId}")
     public ResponseEntity<Booking> createBooking(
             @PathVariable("paymentReferenceId") String paymentReferenceId,
-            @RequestBody Booking booking) {
-        
-        Booking currBooking = this.bookingService.saveBooking(booking, paymentReferenceId);
+            @RequestBody BookingDetailsDTO bookingData) {
+        System.out.println("Booking dto eventId" + bookingData.getEventId());
+        Booking currBooking = this.bookingService.saveBooking(bookingData, paymentReferenceId);
         
         return ResponseEntity.ok(currBooking);
     }

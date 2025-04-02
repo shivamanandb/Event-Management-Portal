@@ -2,14 +2,12 @@ package com.example.backend.models;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -64,7 +62,8 @@ public class Event {
     @JoinColumn(nullable = false)
     private OrganizerDetails organizerDetails;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event", orphanRemoval = true)
+    @JsonIgnore
     private List<Booking> bookings;
 
     public List<Booking> getBookings() {
@@ -75,9 +74,9 @@ public class Event {
         this.bookings = bookings;
     }
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "event", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<EventDetails> event_details;
+    // @OneToMany(cascade = CascadeType.ALL , mappedBy = "event", fetch = FetchType.LAZY)
+    // @JsonIgnore
+    // private Set<EventDetails> event_details;
 
     @Column(nullable = true)
     private String thumbnail;
@@ -181,14 +180,6 @@ public class Event {
 
     public void setPrice(Long price) {
         this.price = price;
-    }
-
-    public Set<EventDetails> getEvent_details() {
-        return event_details;
-    }
-
-    public void setEvent_details(Set<EventDetails> event_details) {
-        this.event_details = event_details;
     }
 
 }

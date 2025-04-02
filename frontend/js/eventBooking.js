@@ -243,27 +243,6 @@ async function updatePaymentOnServer(paymentReferanceId, bookingOrderId, booking
 
         alert('Payment successful! Your booking has been confirmed.');
 
-        const eventDetailsData = {
-            userId: JSON.parse(localStorage.getItem("user")).id,
-            eventId: JSON.parse(getEventId())
-        }
-        const eventDetailResposne = await fetch('http://localhost:8080/eventDetails/save-event', {
-            method: 'POST',
-            headers: {
-                'content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(eventDetailsData)
-        })
-
-        if (!eventDetailResposne.ok) {
-            throw new Error("Failed to update event Details");
-        }
-
-        const eventDetailData = await eventDetailResposne.json();
-
-        console.log("Event Details response: ", eventDetailResposne)
-
         // Optionally redirect to bookings page
         window.location.href = 'myBookings.html';
 

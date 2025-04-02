@@ -2,6 +2,7 @@ package com.example.backend.models;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +15,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -49,15 +49,28 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private UserRole role;
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnore
-    private Set<EventDetails> event_details;
+    private Set<Booking> bookings = new HashSet<>();
 
     @Transient
     private String organizationName;
 
     @Transient
     private String description;
+
+    @Transient
+    private Long organizerId;
+
+    public Long getOrganizerId() {
+        return organizerId;
+    }
+
+
+    public void setOrganizerId(Long organizerId) {
+        this.organizerId = organizerId;
+    }
+
 
     // Constructor
     public User() {}
@@ -155,14 +168,5 @@ public class User implements UserDetails {
         return Collections.singletonList(authority);
     }
 
-
-    public Set<EventDetails> getEvent_details() {
-        return event_details;
-    }
-
-
-    public void setEvent_details(Set<EventDetails> event_details) {
-        this.event_details = event_details;
-    }
 }
 

@@ -282,17 +282,16 @@ function displayFilteredEvents(events, selectedCategory = '') {
     filteredEvents.forEach(event => {
         // Format start date and time
         const startDateTime = formatDateTime(event.eventDateTime);
-
         // Create image path or use a default
-        const imagePath = event.image || `/assets/events/event${Math.floor(Math.random() * 5) + 1}.jpg`;
+        // const imagePath = event.image || `/assets/events/event${Math.floor(Math.random() * 5) + 1}.jpg`;
 
         // Safely handle seat information
         const totalSeats = event.totalSeats ? event.totalSeats : 0;
         const remainingSeats = event.remainingSeat !== undefined ? event.remainingSeat : 0;
-        const bookedSeats = totalSeats - remainingSeats;
+        const bookedSeats = totalSeats - remainingSeats;    
         const today = new Date();
         const todayStr = new Date(today.getTime() + 5.5 * 60 * 60 * 1000).toISOString().slice(0, 16);
-
+        
         // Build action buttons based on user role
         let actionButtonsHTML = '';
 

@@ -93,7 +93,7 @@
  
  // Set min date for event date inputs to today
  const today = new Date();
- const todayStr = today.toISOString().slice(0, 16);
- console.log("today str: ", today)
+ const todayStr = new Date(today.getTime() + 6.5 * 60 * 60 * 1000).toISOString().slice(0, 16);
+ console.log("today str: ", todayStr)
  document.getElementById('eventDateTime').min = todayStr;
  document.getElementById('eventEndDateTime').min = todayStr;
