@@ -1,4 +1,4 @@
-package com.example.backend.service;
+package com.example.backend.services;
 
 public class OrganizerDetailsServiceTest {
 }

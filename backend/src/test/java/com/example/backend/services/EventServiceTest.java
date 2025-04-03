@@ -1,4 +1,4 @@
-package com.example.backend.service;
+package com.example.backend.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

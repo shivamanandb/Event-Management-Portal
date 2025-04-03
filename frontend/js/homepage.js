@@ -54,7 +54,7 @@ function createEventCards(events, limit = 3) {
         const description = event.description ? event.description : "No description available";
         
         // Truncate description if too long
-        const maxLength = 150;
+        const maxLength = 85;
         const truncatedDescription = description.length > maxLength ? 
             description.substring(0, maxLength) + '...' : 
             description;
