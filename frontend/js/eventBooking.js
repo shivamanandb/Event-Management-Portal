@@ -159,12 +159,6 @@ async function updatePaymentOnServer(paymentReferanceId, bookingOrderId, booking
     try {
         const eventData = await updateOrder(orderData);
 
-        // // Update local storage with updated event data
-        // const allEvents = JSON.parse(localStorage.getItem('events') || '[]');
-        // const updatedEvents = allEvents.filter(event => event.id != eventData.id);
-        // updatedEvents.push(eventData);
-        // localStorage.setItem('events', JSON.stringify(updatedEvents));
-
         // Create booking
         const bookingData = {
             userId: user.id,

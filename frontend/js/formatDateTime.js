@@ -1,7 +1,7 @@
 // Function to format ISO date string to readable format
 function formatDateTime(isoString) {
     if (!isoString || isoString === '5555-05-05T05:55:00') {
-        return { date: 'Date TBD', time: 'Time TBD' };
+        return { date: 'Date', time: 'Time' };
     }
 
     try {

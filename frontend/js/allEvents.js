@@ -53,8 +53,9 @@ function displayFilteredEvents(events, selectedCategory = '') {
     filteredEvents.forEach(event => {
         // Format start date and time
         const startDateTime = formatDateTime(event.eventDateTime);
+
         // Create image path or use a default
-        // const imagePath = event.image || `/assets/events/event${Math.floor(Math.random() * 5) + 1}.jpg`;
+        // const imagePath = event.thumbnail
 
         // Safely handle seat information
         const totalSeats = event.totalSeats ? event.totalSeats : 0;
@@ -129,7 +130,7 @@ function displayFilteredEvents(events, selectedCategory = '') {
         allEventCardsContainer.appendChild(card);
     });
 
-    // Set up delete functionality if applicable
+    // Set up delete functionality
     setupDeleteButtons();
 }
 
