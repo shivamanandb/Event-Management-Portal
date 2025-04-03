@@ -80,13 +80,13 @@ public class EventServiceImpl implements EventService {
             if (event.getOrganizerDetails() != null) {
 
                 // Create a copy with minimal organizer details or set to null
-                OrganizerDetails minimalDetails = new OrganizerDetails();
-                minimalDetails.setId(event.getOrganizerDetails().getId());
-                minimalDetails.setOrganizationName(event.getOrganizerDetails().getOrganizationName());
-                minimalDetails.setDescription(event.getOrganizerDetails().getDescription());
-                minimalDetails.setUser(null);
+                OrganizerDetails OrganizerDetails = new OrganizerDetails();
+                OrganizerDetails.setId(event.getOrganizerDetails().getId());
+                OrganizerDetails.setOrganizationName(event.getOrganizerDetails().getOrganizationName());
+                OrganizerDetails.setDescription(event.getOrganizerDetails().getDescription());
+                OrganizerDetails.setUser(null);
 
-                event.setOrganizerDetails(minimalDetails);
+                event.setOrganizerDetails(OrganizerDetails);
             }
         });
         return events;
