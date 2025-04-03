@@ -1,11 +1,17 @@
 package com.example.backend.services.Implementation;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.DTOs.UpdateUserDTO;
+import com.example.backend.models.OrganizerDetails;
 import com.example.backend.models.User;
 import com.example.backend.models.UserRole;
+import com.example.backend.repository.OrganizerDetailsRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.services.UserService;
 
@@ -17,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private OrganizerDetailsServiceImpl organizerDetailsService;
+
+    @Autowired
+    private OrganizerDetailsRepository organizerDetailsRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -68,6 +77,26 @@ public class UserServiceImpl implements UserService {
             System.out.println("Error: " + e.getMessage());
             throw new RuntimeException("Failed to create user: " + e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void updateUserData(UpdateUserDTO updateUserData, Principal principal) {
+        
+        User user = this.userRepository.findByEmail(principal.getName());
+
+        user.setName(updateUserData.getName());
+        user.setEmail(updateUserData.getEmail());
+        user.setPhoneNo(updateUserData.getPhoneNo());
+
+        if(updateUserData.getRole().equals("ORGANIZER")){
+            
+            OrganizerDetails organizerDetails = this.organizerDetailsRepository.findByUser(user);
+            organizerDetails.setDescription(updateUserData.getDescription());
+            organizerDetails.setOrganizationName(updateUserData.getorganizationName());
+            this.organizerDetailsRepository.save(organizerDetails);
+        }
+
+        this.userRepository.save(user);
     }
 
 }

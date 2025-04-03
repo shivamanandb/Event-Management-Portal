@@ -4,6 +4,7 @@ import com.example.backend.repository.EventRepository;
 import com.example.backend.repository.MyOrderRepository;
 import com.example.backend.services.UserService;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.backend.DTOs.UpdateUserDTO;
 import com.example.backend.models.Event;
 import com.example.backend.models.MyOrder;
 import com.example.backend.models.User;
@@ -127,4 +130,29 @@ public class UserController {
             return ResponseEntity.badRequest().body("failed to update payment");
         }
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO updateUserData, Principal principal) {
+
+        if(updateUserData.getRole().equals("ORGANIZER") && 
+        (updateUserData.getorganizationName() == null || updateUserData.getDescription() == null)
+        || updateUserData.getName() == null || updateUserData.getEmail() == null || updateUserData.getPhoneNo() == null
+        || !updateUserData.getEmail().endsWith("@gmail.com")
+        || updateUserData.getPhoneNo().charAt(0)=='0'
+        || updateUserData.getPhoneNo().length() != 10){
+            return ResponseEntity.badRequest().body("Error: Enter Correct Data");
+        }
+
+        String phone = updateUserData.getPhoneNo();
+        for(Integer i=0; i<phone.length(); i++){
+            if(phone.charAt(i)>='0' && phone.charAt(i)<='9'){
+
+            }else{
+                return ResponseEntity.badRequest().body("Error: Invalid Number number");
+            }
+        }
+        this.userService.updateUserData(updateUserData, principal);
+        return ResponseEntity.ok("Profile updated Successfully");
+    }
+
 }

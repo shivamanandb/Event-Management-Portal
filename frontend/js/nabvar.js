@@ -52,7 +52,7 @@ function setupNavigation() {
                     </svg>
                 </div>
                 <div class="dropdown-content" id="userDropdown">
-                    <a href="profile.html">View Profile</a>
+                    <a href="/html/viewAndEditProfile.html">View Profile</a>
                     <a href="#" onclick="logout()">Logout</a>
                 </div>
             `;

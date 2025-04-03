@@ -10,7 +10,7 @@ const fetchCurrentUser = async(token) => {
         
         if(!response.ok){
             const errorData = await response.json();
-            throw new Error(errorData.message || 'Failed to get current User');
+            throw new Error('Failed to get current User');
         }
         
         const data = await response.json();

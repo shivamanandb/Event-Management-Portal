@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css"/>
+    <link rel="stylesheet" href="/css/viewAndEditProfile.css" />
+    <title>Profile | Event Management Portal</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <img src="/assets/homepage/event.png" height="40" width="40" alt="event" />
+            </div>
+            <div>
+                <div class="brand-name">EventHub</div>
+                <div class="tagline">Event Management Platform</div>
+            </div>
+        </div>
+
+        <!-- Menu bar for mobile -->
+        <img class="menu-bar" id="menu-bar" src="/assets/menu.png" height="20" alt="Menu" />
+
+        <!-- Navigation will be inserted by JavaScript -->
+        <div class="drop-down">
+            <nav class="nav-links" id="nav-links"></nav>
+            <div class="auth-buttons" id="auth-buttons"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="profile-header">
+            <h1>My Profile</h1>
+            <button class="edit-btn" id="editProfileBtn">Edit Profile</button>
+        </div>
+
+        <div class="avatar-section">
+            <div class="avatar">
+                <img src="/api/placeholder/100/100" alt="User Avatar">
+            </div>
+            <div>
+                <div class="avatar-name" id="displayName">Loading...</div>
+                <div class="avatar-role" id="displayRole">Loading...</div>
+            </div>
+        </div>
+
+        <!-- View Profile Section -->
+        <div id="viewProfileSection">
+            <div class="profile-section">
+                <h2>Personal Information</h2>
+                <div class="profile-info">
+                    <div class="profile-label">Full Name</div>
+                    <div class="profile-value" id="displayFullName">Loading...</div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-label">Email</div>
+                    <div class="profile-value" id="displayEmail">Loading...</div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-label">Phone</div>
+                    <div class="profile-value" id="displayPhone">Loading...</div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-label">Role</div>
+                    <div class="profile-value" id="displayUserRole">Loading...</div>
+                </div>
+            </div>
+
+            <!-- Organizer-specific section (shown only for organizers) -->
+            <div class="profile-section organizer-section" id="organizerSection">
+                <h2>Organization Details</h2>
+                <div class="profile-info">
+                    <div class="profile-label">Organization Name</div>
+                    <div class="profile-value" id="displayOrgName">Loading...</div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-label">Description</div>
+                    <div class="profile-value" id="displayOrgDescription">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Form -->
+        <div id="editForm" class="edit-form">
+            <h2>Edit Profile</h2>
+            <div class="form-group">
+                <label for="editName">Full Name</label>
+                <input type="text" id="editName" value="name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="editEmail">Email</label>
+                <input type="email" id="editEmail" value="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="editPhone">Phone</label>
+                <input type="text" minlength="10" maxlength="10"  id="editPhone" value="phoneNo" class="form-control">
+            </div>
+
+            <!-- Organizer fields (shown/hidden based on role) -->
+            <div class="form-group organizer-section" id="organizerFormFields">
+                <label for="editOrgName">Organization Name</label>
+                <input type ="text" id="editOrgName" value="organizationName" class="form-control">
+
+                <label style="margin-top: 20px;" for="editOrgDescription">Organization Description</label>
+                <textarea id="editOrgDescription" value="description" class="form-control"  rows="4"></textarea>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="save-btn" id="saveChanges">Save Changes</button>
+                <button type="button" class="cancel-btn" id="cancelEdit">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script src="/js/nabvar.js"></script>
+    <script src="/js/viewAndEditProfile.js"></script>
+    <script src="/js/APIs/updateUserDataApi.js"></script>
+    <script src="/js/APIs/currentUserApi.js"></script>
+</body>
+
+</html>
