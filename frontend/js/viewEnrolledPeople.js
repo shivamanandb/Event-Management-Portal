@@ -7,23 +7,14 @@ function getEventId() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+
+    setupNavigation();
     const eventId = getEventId();
     const token = localStorage.getItem('token');
 
     try {
-        const response = await fetch(`http://localhost:8080/events/getEnrolledPeople/${eventId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch event details');
-        }
-
-        enrolledPeople = await response.json();
+        
+        enrolledPeople = await getEnrolledPeople(eventId);
         console.log("Enrolled People Data: ", enrolledPeople);
 
         // Initial table render

@@ -56,22 +56,8 @@
              return;
          }
 
-         console.log("event data : ", eventData)
-         
-         const response = await fetch('http://localhost:8080/events/create-event', {
-             method: 'POST',
-             headers: {
-                 'Content-Type': 'application/json',
-                 'Authorization': `Bearer ${token}`
-             },
-             body: JSON.stringify(eventData)
-         });
-         
-         if (!response.ok) {
-             throw new Error('Failed to create event');
-         }
-         
-         const eventResponse = await response.json();
+         const eventResponse = await createEvents(token, eventData);
+    
          console.log('Event created :', eventResponse);
          
          // Update events in localStorage

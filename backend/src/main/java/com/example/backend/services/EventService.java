@@ -27,5 +27,7 @@ public interface EventService {
 
     public Set<EnrolledPeopleDTO> getEnrolledPeople(Long eventId);
 
+    public Event getEventById(Long eventId);
+
 
 }

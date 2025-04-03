@@ -1,11 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
     background-color: #f4f4f4;
 }
 
+section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
 h1 {
     text-align: center;
     color: #333;
@@ -22,7 +23,7 @@ h1 {
 #peopleTable td {
     border: 1px solid #ddd;
     padding: 12px;
-    text-align: left;
+    text-align: center;
 }
 
 #peopleTable th {
@@ -31,10 +32,13 @@ h1 {
 }
 
 .filter-container {
+    margin-top: 20px;
     margin-bottom: 20px;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .filter-input {

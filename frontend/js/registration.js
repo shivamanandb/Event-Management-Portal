@@ -68,14 +68,7 @@ form.addEventListener('submit', async (e) => {
         submitButton.disabled = true;
         console.log("userType :", userType)
         // Send data to server
-        const response = await fetch(`http://localhost:8080/user/create-user?role=${userType}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        });
-        console.log("data: ", JSON.stringify(userData))
+        const response = await createUser(userType, userData);
         // Handle response
         if (response.ok) {
             const data = await response.json();

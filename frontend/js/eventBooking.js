@@ -5,29 +5,6 @@ function getEventId() {
     return eventId;
 }
 
-function formatDateTime(isoString) {
-    if (!isoString || isoString === '5555-05-05T05:55:00') {
-        return { date: 'Date TBD', time: 'Time TBD' };
-    }
-
-    try {
-        const date = new Date(isoString);
-
-        // Format date: "Month Day, Year"
-        const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-        const formattedDate = date.toLocaleDateString('en-IN', dateOptions);
-
-        // Format time: "H:MM AM/PM"
-        const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
-        const formattedTime = date.toLocaleTimeString('en-IN', timeOptions);
-
-        return { date: formattedDate, time: formattedTime };
-    } catch (error) {
-        console.error("Error formatting date:", error);
-        return { date: 'Invalid Date', time: 'Invalid Time' };
-    }
-}
-
 document.addEventListener('DOMContentLoaded', async function () {
     const decreaseBtn = document.getElementById('decrease-btn');
     const increaseBtn = document.getElementById('increase-btn');
@@ -38,9 +15,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     const remainingSeat = document.getElementById('seats-remaining');
     const ticketPrice = document.getElementById('ticket-price');
     const checkoutBtn = document.getElementById('rzp-button1');
+    const token = localStorage.getItem('token');
 
     const eventId = getEventId();
-    const events = JSON.parse(localStorage.getItem('events') || '[]');
+    const events = await fetchEvents(token);
     const event = events.find(e => e.id == eventId);
 
     if (!event) {
@@ -112,23 +90,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
 
             // Create order request
-            const response = await fetch('http://localhost:8080/user/create-order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    amount: amount,
-                    info: 'order_request'
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to generate order ID');
-            }
-
-            const data = await response.json();
+            const data = await createOrderApi(amount, token)
 
             if (data.status === "created") {
                 // Open payment form
@@ -195,27 +157,13 @@ async function updatePaymentOnServer(paymentReferanceId, bookingOrderId, booking
     };
 
     try {
-        // Update order status
-        const orderResponse = await fetch('http://localhost:8080/user/update-order', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(orderData)
-        });
+        const eventData = await updateOrder(orderData);
 
-        if (!orderResponse.ok) {
-            throw new Error("Failed to update order");
-        }
-
-        const eventData = await orderResponse.json();
-
-        // Update local storage with updated event data
-        const allEvents = JSON.parse(localStorage.getItem('events') || '[]');
-        const updatedEvents = allEvents.filter(event => event.id != eventData.id);
-        updatedEvents.push(eventData);
-        localStorage.setItem('events', JSON.stringify(updatedEvents));
+        // // Update local storage with updated event data
+        // const allEvents = JSON.parse(localStorage.getItem('events') || '[]');
+        // const updatedEvents = allEvents.filter(event => event.id != eventData.id);
+        // updatedEvents.push(eventData);
+        // localStorage.setItem('events', JSON.stringify(updatedEvents));
 
         // Create booking
         const bookingData = {
@@ -224,19 +172,7 @@ async function updatePaymentOnServer(paymentReferanceId, bookingOrderId, booking
             numberOfBookedSeats: quantityValue
         };
 
-        const bookingResponse = await fetch(`http://localhost:8080/bookings/create-booking/${paymentReferanceId}`, {
-            method: 'POST',
-            headers: {
-                'content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(bookingData)
-        });
-
-        if (!bookingResponse.ok) {
-            throw new Error("Failed to create booking");
-        }
-
+        const bookingResponse = await createBookings(paymentReferanceId, bookingData);
         // Update UI to reflect changes
         document.getElementById('seats-remaining').textContent =
             `${eventData.remainingSeat} ${eventData.remainingSeat == 1 ? 'seat' : 'seats'} remaining`;

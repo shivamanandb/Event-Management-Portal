@@ -206,4 +206,14 @@ public class EventServiceImpl implements EventService {
 
         return enrolledPeople;
     }
+
+    @Override
+    public Event getEventById(Long eventId) {
+        
+        Event event = this.eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found with id: " + eventId));
+        
+        return event;
+                          
+    }
 }

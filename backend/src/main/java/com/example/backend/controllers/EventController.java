@@ -45,6 +45,12 @@ public class EventController {
         return this.eventService.getEventsByCategory(category);
     }
 
+    @GetMapping("/{eventId}")
+    public Event getEventById(@PathVariable("eventId") Long eventId){
+
+        return this.eventService.getEventById(eventId);
+    }
+
     @PutMapping("/update/{id}")
     public Event updateEvent(@PathVariable("id") Long id, @RequestBody Event event){
 

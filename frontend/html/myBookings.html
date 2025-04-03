@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css"/>
     <link rel="stylesheet" href="/css/myBookings.css"/>
     <title>My Bookings - EventHub</title>
 </head>
@@ -12,15 +13,22 @@
     <header>
         <div class="logo-container">
             <div class="logo">
-                <img src="/assets/homepage/event.png" height="40px" width="40px" alt="event" />
+                <img src="/assets/homepage/event.png" height="40" width="40" alt="event" />
             </div>
             <div>
                 <div class="brand-name">EventHub</div>
                 <div class="tagline">Event Management Platform</div>
             </div>
         </div>
-        <nav id="nav-links"></nav>
-        <div id="auth-buttons"></div>
+        
+        <!-- Menu bar for mobile -->
+        <img class="menu-bar" id="menu-bar" src="/assets/menu.png" height="20" alt="Menu" />
+        
+        <!-- Navigation will be inserted by JavaScript -->
+        <div class="drop-down">
+            <nav class="nav-links" id="nav-links"></nav>
+            <div class="auth-buttons" id="auth-buttons"></div>
+        </div>
     </header>
 
     <div class="container">
@@ -33,6 +41,10 @@
             <!-- Bookings will be dynamically inserted here -->
         </div>
     </div>
+    <script src="/js/nabvar.js"></script>
+    <script src="/js/APIs/getAllbookingsApi.js"></script>
+    <script src="/js/formatDateTime.js"></script>
+    <script src="/js/APIs/cancelBookingsApi.js"></script>
     <script src="/js/myBookings.js"></script>
 </body>
 

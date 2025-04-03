@@ -41,7 +41,7 @@ function validateForm() {
 }
 
 // Load event data when page loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const eventId = getEventId();
     console.log("Event id: ", eventId)
     
@@ -51,8 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Get event data from localStorage
-    const events = JSON.parse(localStorage.getItem('events'));
-    const eventData = events.find((e)=>e.id == eventId);
+    const eventData = await getEvent(eventId);
 
     if (eventData && eventData.id == eventId) {
         populateForm(eventData);
@@ -79,6 +78,7 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
     
     // Get form data
     const formData = new FormData(this);
+
     const eventData = {
         id: formData.get('eventId')
     };
@@ -106,28 +106,7 @@ document.getElementById('eventForm').addEventListener('submit', async function(e
         
         console.log('Updating event with data:', eventData);
         
-        // Send update request to server
-        const response = await fetch(`http://localhost:8080/events/update/${eventData.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(eventData)
-        });
-        
-        if (!response.ok) {
-            throw new Error('Failed to update event');
-        }
-        
-        // Show success message and redirect
-        alert('Event updated successfully!');
-
-        // update localStorage
-        const events = JSON.parse(localStorage.getItem('events'));
-        const remainingEvents = events.filter((event) => event.id != eventData.id);
-        remainingEvents.push(eventData);
-        localStorage.setItem('events', JSON.stringify(remainingEvents));
+        const response = await updateEventForm(eventData.id, eventData);
         
         window.location.href = 'homepage.html';
         

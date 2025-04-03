@@ -1,194 +1,6 @@
-// Function to check whether user is logged in and set up appropriate UI elements
-function setupNavigation() {
-    const navLinks = document.getElementById('nav-links');
-    const authButtons = document.getElementById('auth-buttons');
-    const dropDown = document.querySelector('.drop-down');
-
-    // Check if elements exist
-    if (!navLinks || !authButtons) {
-        console.error("Required DOM elements not found");
-        return;
-    }
-
-    const token = localStorage.getItem("token");
-    const userStr = localStorage.getItem('user');
-
-    // Clear existing content
-    navLinks.innerHTML = '';
-    authButtons.innerHTML = '';
-
-    // Add default navigation links
-    navLinks.innerHTML = `
-        <a href="homepage.html">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    `;
-
-    if (token && userStr) {
-        try {
-            const user = JSON.parse(userStr);
-
-            // Add role-specific navigation links
-            if (user.role === 'ORGANIZER') {
-                navLinks.innerHTML += `
-                    <a href="allEvents.html">Your Events</a>
-                    <a href="eventCreationForm.html">Create Event</a>
-                `;
-            } else if (user.role === 'ATTENDEE') {
-                navLinks.innerHTML += `
-                    <a href="/html/myBookings.html">Your Bookings</a>
-                    <a href="allEvents.html">Events</a>
-                `;
-            }
-
-            // Add user profile dropdown
-            const userProfileDiv = document.createElement('div');
-            userProfileDiv.className = 'user-profile';
-            userProfileDiv.innerHTML = `
-                <div class="user-icon" onclick="toggleDropdown()">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </div>
-                <div class="dropdown-content" id="userDropdown">
-                    <a href="profile.html">View Profile</a>
-                    <a href="#" onclick="logout()">Logout</a>
-                </div>
-            `;
-
-            authButtons.appendChild(userProfileDiv);
-
-        } catch (e) {
-            console.error('Error parsing user data:', e);
-            showLoginSignupButtons();
-        }
-    } else {
-        showLoginSignupButtons();
-    }
-}
-
-
-function showLoginSignupButtons() {
-    const authButtons = document.getElementById('auth-buttons');
-
-    if (!authButtons) {
-        console.error("Auth buttons container not found");
-        return;
-    }
-
-    // Create login button
-    const loginBtn = document.createElement('div');
-    loginBtn.className = 'log-in-btn';
-    loginBtn.innerHTML = `
-        <a class="log-in-btn" href="login.html">Log In</a>
-    `;
-
-    // Create signup button
-    const signupBtn = document.createElement('a');
-    signupBtn.href = 'registration.html';
-    signupBtn.className = 'cta-button';
-    signupBtn.textContent = 'Sign Up';
-
-    // Add to auth buttons container
-    authButtons.appendChild(loginBtn);
-    authButtons.appendChild(signupBtn);
-}
-
-
-// Function to toggle the mobile menu
-function toggleMobileMenu() {
-    const dropDown = document.querySelector('.drop-down');
     
-    if (dropDown) {
-        dropDown.classList.toggle('active');
-    }
-}
-
-// Function to toggle dropdown menu
-function toggleDropdown() {
-    const dropdown = document.getElementById("userDropdown");
-    if (dropdown) {
-        dropdown.classList.toggle("show");
-    }
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function (event) {
-    if (!event.target.matches('.user-icon') &&
-        !event.target.matches('.user-icon svg') &&
-        !event.target.matches('.user-icon path') &&
-        !event.target.matches('.user-icon circle')) {
-
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            const openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-
-// Function to handle logout
-function logout() {
-    console.log("Logging out...");
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.clear();
-    // Force reload to ensure the page updates
-    window.location.href = 'homepage.html?refresh=' + new Date().getTime();
-}
-
-// Function to format date
-function formatDate(dateString) {
-    if (!dateString) return "Date not available";
-    
-    try {
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dateString).toLocaleDateString('en-IN', options);
-    } catch (e) {
-        console.error("Error formatting date:", e);
-        return "Invalid date";
-    }
-}
-
-// Function to format a date and time value safely
-function formatDateTime(dateTimeString) {
-    if (!dateTimeString) return { date: "Date not available", time: "Time not available" };
-    
-    try {
-        // Create a Date object
-        const date = new Date(dateTimeString);
-        
-        if (isNaN(date.getTime())) {
-            throw new Error("Invalid date");
-        }
-
-        // Extract date components
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1; // getMonth() returns 0-11, so add 1
-        const day = date.getDate();
-
-        // Extract time components
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-
-        // Format date as YYYY-MM-DD
-        const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-
-        // Format time as HH:MM
-        const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-
-        return { date: formattedDate, time: formattedTime };
-    } catch (e) {
-        console.error("Error formatting date/time:", e);
-        return { date: "Invalid date", time: "Invalid time" };
-    }
-}
-
 // Function to create event cards - with limit option for homepage
-function createEventCards(limit = 3) {
+function createEventCards(events, limit = 3) {
     // console.log("Creating event cards...");
     const container = document.getElementById('eventCards');
     
@@ -198,15 +10,13 @@ function createEventCards(limit = 3) {
     }
     
     // Safely get events from localStorage
-    const eventsStr = localStorage.getItem('events');
-    if (!eventsStr) {
+    if (!events) {
         container.innerHTML = '<p>No events available</p>';
         return;
     }
-    
-    let events;
+
     try {
-        events = JSON.parse(eventsStr);
+
         if (!Array.isArray(events) || events.length === 0) {
             container.innerHTML = '<p>No events available</p>';
             return;
@@ -219,7 +29,6 @@ function createEventCards(limit = 3) {
     
     // Safely get user data
     const userStr = localStorage.getItem('user');
-    let user = { role: 'GUEST' }; // Default role if no user is logged in
     
     if (userStr) {
         try {
@@ -317,130 +126,17 @@ function createEventCards(limit = 3) {
     setupDeleteButtons();
 }
 
-// Delete an event
-const setupDeleteButtons = () => {
-    const deleteButtons = document.querySelectorAll('.delete-btn');
-    console.log("Delete buttons found:", deleteButtons.length);
-    
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', async (event) => {
-            event.preventDefault();
-            const eventId = button.getAttribute('data-id');
-            
-            if (!eventId) {
-                console.error("No event ID found for delete button");
-                alert("Error: Cannot identify event to delete");
-                return;
-            }
-            
-            // Show confirmation dialog
-            const isConfirmed = confirm("Are you sure you want to delete this event?");
-            
-            // Only proceed if user clicked "OK" (Yes)
-            if (isConfirmed) {
-                try {
-                    console.log("Attempting to delete event with ID:", eventId);
-                    
-                    const response = await fetch(`http://localhost:8080/events/${eventId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    
-                    if (response.ok) {
-                        // Success - remove the event card from the DOM
-                        const eventCard = button.closest('.event-card');
-                        if (eventCard) {
-                            eventCard.remove();
-                        }
-                        
-                        // Also update localStorage events list if applicable
-                        try {
-                            const eventsStr = localStorage.getItem('events');
-                            if (eventsStr) {
-                                const events = JSON.parse(eventsStr);
-                                const updatedEvents = events.filter(event => event.id != eventId);
-                                localStorage.setItem('events', JSON.stringify(updatedEvents));
-                            }
-                        } catch (e) {
-                            console.error("Error updating localStorage after delete:", e);
-                        }
-                        
-                        alert("Event deleted successfully!");
-                    } else {
-                        const errorData = await response.json().catch(() => null);
-                        console.error("Delete error response:", errorData);
-                        alert(`Failed to delete event. Status: ${response.status}. ${errorData?.message || ''}`);
-                    }
-                } catch (error) {
-                    console.error('Error deleting event:', error);
-                    alert("An error occurred while trying to delete the event.");
-                }
-            } else {
-                // User clicked "Cancel" (No)
-                console.log("Event deletion cancelled");
-            }
-        });
-    });
-};
-
-// Set up menu bar click listener
-const menuBar = document.getElementById('menu-bar');
-if (menuBar) {
-    menuBar.addEventListener('click', toggleMobileMenu);
-}
-   
-// Make functions available globally
-window.toggleDropdown = toggleDropdown;
-window.logout = logout;
-window.toggleMobileMenu = toggleMobileMenu;
-window.setupDeleteButtons = setupDeleteButtons;
-
-// Check if page was redirected after login
-function checkForLoginRedirect() {
-    // Get URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromLogin = urlParams.get('fromLogin');
-    
-    if (fromLogin === 'true') {
-        // console.log("Page loaded after login, ensuring UI refreshes");
-        // Force a full reload to clear any cached state
-        window.location.href = 'homepage.html?refresh=' + new Date().getTime();
-    }
-}
-
 // Initialize everything when the page loads
 document.addEventListener('DOMContentLoaded', async function() {
     console.log("DOM content loaded, initializing...");
-    const user = JSON.parse(localStorage.getItem('user'));
-    if(user && user.role == 'ATTENDEE') {
-        const response = await fetch('http://localhost:8080/events', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-
-        if(!response.ok){
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Event could not fetch');
-        }
-        
-        const data = await response.json();
-        
-        // Store events as JSON string
-        if(data){
-            localStorage.setItem('events', JSON.stringify(data));
-        }
-    }
+    const token = localStorage.getItem('token');
+    const response = await fetchEvents(token);
     checkForLoginRedirect();
     setupNavigation();
     
     // Only try to create event cards if we're on a page that needs them
     const eventCardsContainer = document.getElementById('eventCards');
     if (eventCardsContainer) {
-        createEventCards();
+        createEventCards(response);
     }
 });

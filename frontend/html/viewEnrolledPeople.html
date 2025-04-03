@@ -4,39 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/viewEnrolledPeople.css"/>
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/viewEnrolledPeople.css" />
     <title>View Enrolled People</title>
 </head>
 
 <body>
-    <h1>Enrolled People</h1>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <img src="/assets/homepage/event.png" height="40" width="40" alt="event" />
+            </div>
+            <div>
+                <div class="brand-name">EventHub</div>
+                <div class="tagline">Event Management Platform</div>
+            </div>
+        </div>
 
-    <div class="filter-container">
-        <input type="text" id="nameFilter" class="filter-input" placeholder="Filter by Name">
-        <input type="text" id="eventFilter" class="filter-input" placeholder="Filter by Event">
-        <select id="statusFilter" class="filter-input">
-            <option value="">All Booking Statuses</option>
-            <option value="Booked">Booked</option>
-            <option value="Cancelled">Cancelled</option>
-        </select>
-    </div>
+        <!-- Menu bar for mobile -->
+        <img class="menu-bar" id="menu-bar" src="/assets/menu.png" height="20" alt="Menu" />
 
-    <table id="peopleTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Booking Status</th>
-                <th>Payment Reference ID</th>
-                <th>Event Date</th>
-                <th>Number of Booked Tickets</th>
-            </tr>
-        </thead>
-        <tbody id="peopleTableBody">
-            <!-- Rows will be dynamically populated by JavaScript -->
-        </tbody>
-    </table>
+        <!-- Navigation will be inserted by JavaScript -->
+        <div class="drop-down">
+            <nav class="nav-links" id="nav-links"></nav>
+            <div class="auth-buttons" id="auth-buttons"></div>
+        </div>
+    </header>
+    <section>
+        <h1>Enrolled People</h1>
 
+        <div class="filter-container">
+            <input type="text" id="nameFilter" class="filter-input" placeholder="Filter by Name">
+            <input type="text" id="eventFilter" class="filter-input" placeholder="Filter by Event">
+            <select id="statusFilter" class="filter-input">
+                <option value="">All Booking Statuses</option>
+                <option value="Booked">Booked</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+        </div>
+
+        <table id="peopleTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Booking Status</th>
+                    <th>Payment Reference ID</th>
+                    <th>Event Date</th>
+                    <th>Number of Booked Tickets</th>
+                </tr>
+            </thead>
+            <tbody id="peopleTableBody">
+                <!-- Rows will be dynamically populated by JavaScript -->
+            </tbody>
+        </table>
+    </section>
+    <script src="/js/nabvar.js"></script>
+    <script src="/js/APIs/getEnrolledPeopleApi.js"></script>
     <script src="/js/viewEnrolledPeople.js"></script>
 </body>
 

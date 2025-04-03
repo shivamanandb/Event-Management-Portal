@@ -12,21 +12,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        // Fetch bookings from backend
-        const response = await fetch(`http://localhost:8080/bookings/all/${user.id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch bookings');
-        }
-
-        const bookings = await response.json();
-        console.log("Bookingdss:: ", bookings) 
+        
+        const bookings = await getAllBookings(user.id);
 
         // Display bookings
         displayBookings(bookings);
@@ -43,165 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     </div>
 `;
     }
-
-    // // Setup additional event listeners
-    // setupEventListeners();
 });
-
-// Function to check whether user is logged in and set up appropriate UI elements
-function setupNavigation() {
-    const navLinks = document.getElementById('nav-links');
-    const authButtons = document.getElementById('auth-buttons');
-
-    // Check if elements exist
-    if (!navLinks || !authButtons) {
-        console.error("Required DOM elements not found");
-        return;
-    }
-
-    const token = localStorage.getItem("token");
-    const userStr = localStorage.getItem('user');
-
-    // Clear existing content
-    navLinks.innerHTML = '';
-    authButtons.innerHTML = '';
-
-    // Add default navigation links
-    navLinks.innerHTML = `
-        <a href="homepage.html">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    `;
-
-    if (token && userStr) {
-        try {
-            const user = JSON.parse(userStr);
-
-            // Add role-specific navigation links
-            if (user.role === 'ORGANIZER') {
-                navLinks.innerHTML += `
-                    <a href="allEvents.html">Your Events</a>
-                    <a href="eventCreationForm.html">Create Event</a>
-                `;
-            } else if (user.role === 'ATTENDEE') {
-                navLinks.innerHTML += `
-                    <a href="myBookings.html">Your Bookings</a>
-                    <a href="allEvents.html">Events</a>
-
-                `;
-            }
-
-            // Add user profile dropdown
-            const userProfileDiv = document.createElement('div');
-            userProfileDiv.className = 'user-profile';
-            userProfileDiv.innerHTML = `
-                <div class="user-icon" onclick="toggleDropdown()">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </div>
-                <div class="dropdown-content" id="userDropdown">
-                    <a href="profile.html">View Profile</a>
-                    <a href="#" onclick="logout()">Logout</a>
-                </div>
-            `;
-
-            authButtons.appendChild(userProfileDiv);
-
-        } catch (e) {
-            console.error('Error parsing user data:', e);
-            showLoginSignupButtons();
-        }
-    } else {
-        showLoginSignupButtons();
-    }
-}
-
-// Function to show login and signup buttons for logged out users
-function showLoginSignupButtons() {
-    const authButtons = document.getElementById('auth-buttons');
-
-    if (!authButtons) {
-        console.error("Auth buttons container not found");
-        return;
-    }
-
-    // Create login button
-    const loginBtn = document.createElement('div');
-    loginBtn.className = 'log-in-btn';
-    loginBtn.innerHTML = `
-        <div class="log-in-icon"></div>
-        <a href="login.html">Log In</a>
-    `;
-
-    // Create signup button
-    const signupBtn = document.createElement('a');
-    signupBtn.href = 'registration.html';
-    signupBtn.className = 'cta-button';
-    signupBtn.textContent = 'Sign Up';
-
-    // Add to auth buttons container
-    authButtons.appendChild(loginBtn);
-    authButtons.appendChild(signupBtn);
-}
-
-// Function to toggle dropdown menu
-function toggleDropdown() {
-    const dropdown = document.getElementById("userDropdown");
-    if (dropdown) {
-        dropdown.classList.toggle("show");
-    }
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function (event) {
-    if (!event.target.matches('.user-icon') &&
-        !event.target.matches('.user-icon svg') &&
-        !event.target.matches('.user-icon path') &&
-        !event.target.matches('.user-icon circle')) {
-
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            const openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-
-// Function to handle logout
-function logout() {
-    console.log("Logging out...");
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.clear();
-
-    // Force reload to ensure the page updates
-    window.location.href = 'homepage.html';
-}
-
-// Format date and time
-function formatDateTime(isoString) {
-    if (!isoString) {
-        return { date: 'Date', time: 'Time' };
-    }
-
-    try {
-        const date = new Date(isoString);
-        const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-        const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
-
-        return {
-            date: date.toLocaleDateString('en-US', dateOptions),
-            time: date.toLocaleTimeString('en-US', timeOptions)
-        };
-    } catch (error) {
-        console.error("Error formatting date:", error);
-        return { date: 'Invalid Date', time: 'Invalid Time' };
-    }
-}
 
 // Display bookings
 function displayBookings(bookings) {
@@ -210,18 +39,15 @@ function displayBookings(bookings) {
 
     if (!bookings || bookings.length === 0) {
         bookingsList.innerHTML = `
-    <div class="empty-bookings">
-        <h2>No Bookings Found</h2>
-        <p>You haven't booked any events yet. Explore and book some exciting events!</p>
-    </div>
-`;
+        <div class="empty-bookings">
+            <h2>No Bookings Found</h2>
+            <p>You haven't booked any events yet. Explore and book some exciting events!</p>
+        </div>`;
         return;
     }
 
     bookings.forEach(booking => {
-        // const event = JSON.parse(localStorage.getItem('events')).find(event => event.id == booking.eventId)
 
-        console.log("event:", event)
         const eventDateTime = formatDateTime(booking?.event?.eventDateTime);
         const ticketBookedDate = formatDateTime(booking.bookingDateTime);
         const imagePath = '';
@@ -294,22 +120,7 @@ function setupCancelBookingButtons(bookings) {
                     button.style.opacity = '0.5';
                     button.classList.add('disabled');
 
-                    // Send cancel booking request to backend
-                    const response = await fetch(`http://localhost:8080/bookings/cancel/${bookingId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        }
-                    });
-
-                    if (!response.ok) {
-                        // Throw an error with more context
-                        const errorBody = await response.text();
-                        throw new Error(`Failed to cancel booking: ${errorBody}`);
-                    }
-                    const cancelledEventData = await response.json();
-                    console.log("cancelled event data : ", cancelledEventData)
+                    const cancelledEventData = await cancelBookings(bookingId);
 
                     // Getting new data with updated number of seats
                     const currEventData = bookings.filter(booking => booking?.id != cancelledEventData?.id);
