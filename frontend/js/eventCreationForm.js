@@ -44,7 +44,7 @@
              eventData[key] = value === 'true';
          } else if (key === 'totalSeats' || key === 'remainingSeats' || key === 'price') {
              eventData[key] = parseInt(value, 10);
-         } else if (key !== 'thumbnail') {
+         } else {
              eventData[key] = value;
          }
      }
