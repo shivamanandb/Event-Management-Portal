@@ -9,7 +9,16 @@ function createEventCards(events, limit = 3) {
         return;
     }
     
-    // Safely get events from localStorage
+    const token = localStorage.getItem('token');
+    // check if user is logged in
+    if(!token){
+        container.innerHTML = '<p>Please Login to watch Events</p>';
+        const btn = document.getElementById('view-all-btn');
+        btn.style.display = 'none';
+        return;
+    }
+
+    // Safely get events
     if (!events) {
         container.innerHTML = '<p>No events available</p>';
         return;
@@ -130,6 +139,14 @@ function createEventCards(events, limit = 3) {
 document.addEventListener('DOMContentLoaded', async function() {
     console.log("DOM content loaded, initializing...");
     const token = localStorage.getItem('token');
+
+    const ctaBtn = document.getElementById('cta-btn');
+    ctaBtn.innerHTML = token ? 'View Profile' : 'Get Started';
+
+    ctaBtn.addEventListener('click', function() {
+        window.location.href = token ? '/html/viewAndEditProfile.html':'/html/login.html';
+    });
+
     const response = await fetchEvents(token);
     setupNavigation();
     

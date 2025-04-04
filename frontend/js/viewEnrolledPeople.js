@@ -54,17 +54,15 @@ function renderTable(data) {
 // Function to filter table data
 function filterTable() {
     const nameFilter = document.getElementById('nameFilter').value.toLowerCase();
-    const eventFilter = document.getElementById('eventFilter').value.toLowerCase();
     const statusFilter = document.getElementById('statusFilter').value;
 
     const filteredData = enrolledPeople.filter(person => {
         const nameMatch = person.name.toLowerCase().includes(nameFilter);
-        const eventMatch = !eventFilter || person.eventName.toLowerCase().includes(eventFilter);
         const statusMatch = statusFilter === '' ||
             (statusFilter === 'Booked' && person.bookingStatus === true) ||
             (statusFilter === 'Cancelled' && person.bookingStatus === false);
 
-        return nameMatch && eventMatch && statusMatch;
+        return nameMatch && statusMatch;
     });
 
     renderTable(filteredData);
@@ -72,5 +70,4 @@ function filterTable() {
 
 // Add event listeners for filtering
 document.getElementById('nameFilter').addEventListener('input', filterTable);
-document.getElementById('eventFilter').addEventListener('input', filterTable);
 document.getElementById('statusFilter').addEventListener('change', filterTable);

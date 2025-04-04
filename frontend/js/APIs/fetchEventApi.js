@@ -11,6 +11,12 @@ const fetchEvents = async(token) => {
         const user = JSON.parse(userStr);
         console.log("User:", user);
         
+        
+        const loader = document.createElement('div');
+        loader.className = 'loader';
+        loader.innerHTML = `<div class="loader">Loading...</div>`;
+        document.body.appendChild(loader);
+        
         // Only fetch events if user is an ATTENDEE
         if(user && user.role == 'ATTENDEE') {
             const response = await fetch('http://localhost:8080/events', {
@@ -19,6 +25,7 @@ const fetchEvents = async(token) => {
                     'Content-Type': 'application/json',
                 }
             });
+            loader.remove();
 
             if(!response.ok){
                 const errorData = await response.json();
@@ -39,6 +46,7 @@ const fetchEvents = async(token) => {
                     'Authorization': `Bearer ${token}`
                 }
             });
+            loader.remove();
 
             if(!response.ok){
                 const errorData = await response.json();
@@ -49,6 +57,8 @@ const fetchEvents = async(token) => {
             
             return data;
         }
+        
+        
     } catch(error) {
         console.error('Could not fetch events:', error);
     }

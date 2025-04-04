@@ -20,8 +20,6 @@ function setupNavigation() {
     // Add default navigation links
     navLinks.innerHTML = `
         <a href="homepage.html">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
     `;
 
     if (token && userStr) {
@@ -66,6 +64,11 @@ function setupNavigation() {
     } else {
         showLoginSignupButtons();
     }
+
+    // rest elements of navbar
+    navLinks.innerHTML += `
+        <a href="#">About</a>
+        <a href="#">Contact</a>`;
 }
 
 
@@ -137,7 +140,7 @@ function logout() {
     localStorage.removeItem('user');
     localStorage.clear();
     // Force reload to ensure the page updates
-    window.location.href = 'login.html';
+    window.location.href = 'homepage.html';
 }
 
 // Set up menu bar click listener
