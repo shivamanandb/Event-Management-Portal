@@ -122,7 +122,7 @@ function displayFilteredEvents(events, selectedCategory = '') {
                 <p>Seats: ${bookedSeats}/${totalSeats}</p>
             </div>
         </div>
-        ${JSON.parse(localStorage.getItem('user')).role === 'ORGANIZER' ? `<a href="viewEnrolledPeople.html?id=${event.id}" class="event-link">View Enrolled People</a>` : ''}
+        ${JSON.parse(localStorage.getItem('user')).role === 'ORGANIZER' ? `<a href="viewEnrolledPeople.html?id=${event.id}" class="event-link">View Enrolled People</a>` : `<a href="viewEvents.html?id=${event.id}" class="event-link">View Event Details</a>`}
         ${actionButtonsHTML}
     </div>
 `;

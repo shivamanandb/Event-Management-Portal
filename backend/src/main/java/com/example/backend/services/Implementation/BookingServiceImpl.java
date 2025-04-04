@@ -47,9 +47,8 @@ public class BookingServiceImpl implements BookingService {
         currBooking.setNumberOfBookedSeats(booking.getNumberOfBookedSeats());
         currBooking.setEvent(event);
         currBooking.setMyOrder(myOrder);
-        Booking response = this.bookingRepository.save(currBooking);
 
-        return response;
+        return this.bookingRepository.save(currBooking);
     }
 
     @Override

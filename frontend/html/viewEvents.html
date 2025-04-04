@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css"/>
+    <link rel="stylesheet" href="/css/viewEvent.css"/>
+    <title>Event Details | EventHub</title>        
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <img src="/assets/homepage/event.png" height="40" width="40" alt="event" />
+            </div>
+            <div>
+                <div class="brand-name">EventHub</div>
+                <div class="tagline">Event Management Platform</div>
+            </div>
+        </div>
+        
+        <!-- Menu bar for mobile -->
+        <img class="menu-bar" id="menu-bar" src="/assets/menu.png" height="20" alt="Menu" />
+        
+        <!-- Navigation will be inserted by JavaScript -->
+        <div class="drop-down">
+            <nav class="nav-links" id="nav-links"></nav>
+            <div class="auth-buttons" id="auth-buttons"></div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="event-header">
+            <h1 id="eventName">Loading Event...</h1>
+            <div class="event-category" id="eventCategory">Loading...</div>
+        </div>
+
+        <div class="event-details">
+            <div class="event-info">
+                <div class="event-label">Description:</div>
+                <div class="event-value" id="eventDescription">Loading...</div>
+            </div>
+            <div class="event-info">
+                <div class="event-label">Start Time:</div>
+                <div class="event-value" id="eventStartTime">Loading...</div>
+            </div>
+            <div class="event-info">
+                <div class="event-label">End Time:</div>
+                <div class="event-value" id="eventEndTime">Loading...</div>
+            </div>
+            <div class="event-info">
+                <div class="event-label">Location:</div>
+                <div class="event-value" id="eventLocation">Loading...</div>
+            </div>
+            <div class="event-info">
+                <div class="event-label">Price:</div>
+                <div class="event-value" id="eventPrice">Loading...</div>
+            </div>
+            <div class="event-info">
+                <div class="event-label">Organizer:</div>
+                <div class="event-value" id="eventOrganizer">Loading...</div>
+            </div>
+        </div>
+
+        <button class="event-btn" id="eventBtn">Go To All Events</button>
+    </div>
+    <script src="/js/APIs/getEventByIdApi.js"></script>
+    <script src="/js/nabvar.js"></script>
+    <script src="/js/formatDateTime.js"></script>
+    <script src="/js/viewEvents.js"></script>
+</body>
+</html>

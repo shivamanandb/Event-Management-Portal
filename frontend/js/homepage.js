@@ -131,7 +131,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log("DOM content loaded, initializing...");
     const token = localStorage.getItem('token');
     const response = await fetchEvents(token);
-    checkForLoginRedirect();
     setupNavigation();
     
     // Only try to create event cards if we're on a page that needs them

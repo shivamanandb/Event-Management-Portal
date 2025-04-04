@@ -46,7 +46,7 @@ form.addEventListener('submit', async (event) => {
     catch(error){
         // handle errors
         console.error('Login error:', error);
-        alert(`Login Failed: ${error.message}`);
+        alert(`Login Failed: Invalid email or password`);
     }
     finally {
         // Re-enable button if it was disabled

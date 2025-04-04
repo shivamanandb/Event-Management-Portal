@@ -2,6 +2,7 @@ package com.example.backend.controllers;
 
 import com.example.backend.repository.EventRepository;
 import com.example.backend.repository.MyOrderRepository;
+import com.example.backend.repository.UserRepository;
 import com.example.backend.services.UserService;
 
 import java.security.Principal;
@@ -10,8 +11,10 @@ import java.util.Map;
 import java.util.Optional;
 import com.razorpay.*;
 
+import org.json.HTTP;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.backend.helper.*;
 import com.example.backend.DTOs.UpdateUserDTO;
 import com.example.backend.models.Event;
 import com.example.backend.models.MyOrder;
@@ -32,23 +36,72 @@ import com.example.backend.models.User;
 @CrossOrigin("*")
 public class UserController {
 
+    @Autowired
+    private final UserRepository userRepository;
+
+    @Autowired
     private final EventRepository eventRepository;
+
     @Autowired
     private UserService userService;
 
     @Autowired
     private MyOrderRepository myOrderRepository;
+    
 
     private Event event;
 
-    UserController(EventRepository eventRepository) {
+    UserController(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
     }
 
     // creating User
     @PostMapping("/create-user")
-    public User createUser(@RequestBody User user, @RequestParam String role) {
-        return this.userService.createUser(user, role);
+    public ResponseEntity<?> createUser(@RequestBody User user, @RequestParam String role) {
+        
+        UserValidation userValidation = new UserValidation();
+
+        try{
+
+            // validate email
+            if(user.getEmail() == null || !userValidation.isValidEmail(user.getEmail())){
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Error: Invalid Email"));
+            }
+
+            // validate email if already exists
+            if(this.userRepository.findByEmail(user.getEmail()) != null){
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Error: Email already exists"));
+            }
+
+            // validate password
+            if(user.getPassword() == null || !userValidation.isStrongPassword(user.getPassword())){
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Error: Password must be at least 8 characters and include uppercase, lowercase, numbers, and special characters"));
+            }
+
+            // validate name
+            if(user.getName() == null){
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Error: Name cannot be empty"));
+            }
+
+            // validate phone number
+            if(user.getPhoneNo() == null || !userValidation.isValidPhoneNumber(user.getPhoneNo())){
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Error: Invalid Phone Number"));
+            }
+
+            // validate organization name and description for ORGANIZER role
+            if(role.equals("ORGANIZER")){
+                if(user.getOrganizationName() == null || user.getDescription() == null){
+                    return ResponseEntity.badRequest().body(new ApiResponse(false, "Error: Organization name and description cannot be empty"));
+                }
+            }
+
+        }catch(Exception e){
+            System.out.println("Error: "+e.getMessage());
+        }
+        User createdUser = this.userService.createUser(user, role);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
     
     @PostMapping("/create-order")

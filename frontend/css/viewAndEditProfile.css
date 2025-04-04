@@ -76,36 +76,19 @@ body {
     color: var(--text-color);
 }
 
-.avatar-section {
+.user-section {
     display: flex;
     align-items: center;
     margin-bottom: 30px;
 }
 
-.avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
-    overflow: hidden;
-}
 
-.avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.avatar-name {
+.user-name {
     font-size: 20px;
     font-weight: 600;
 }
 
-.avatar-role {
+.user-role {
     color: #666;
     margin-top: 5px;
 }

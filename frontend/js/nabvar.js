@@ -137,29 +137,11 @@ function logout() {
     localStorage.removeItem('user');
     localStorage.clear();
     // Force reload to ensure the page updates
-    window.location.href = 'homepage.html?refresh=' + new Date().getTime();
+    window.location.href = 'login.html';
 }
 
 // Set up menu bar click listener
 const menuBar = document.getElementById('menu-bar');
 if (menuBar) {
     menuBar.addEventListener('click', toggleMobileMenu);
-}
-   
-// Make functions available globally
-window.toggleDropdown = toggleDropdown;
-window.logout = logout;
-window.toggleMobileMenu = toggleMobileMenu;
-
-// Check if page was redirected after login
-function checkForLoginRedirect() {
-    // Get URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromLogin = urlParams.get('fromLogin');
-    
-    if (fromLogin === 'true') {
-        // console.log("Page loaded after login, ensuring UI refreshes");
-        // Force a full reload to clear any cached state
-        window.location.href = 'homepage.html?refresh=' + new Date().getTime();
-    }
 }
