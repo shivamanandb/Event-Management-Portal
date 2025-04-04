@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+    if(localStorage.getItem('token')){
+        window.location.href = '/html/homepage.html';
+        return;
+    }
+    document.body.style.display = 'flex';
     const passwordToggle = document.getElementById('passwordToggle');
     const passwordInput = document.getElementById('password');
     

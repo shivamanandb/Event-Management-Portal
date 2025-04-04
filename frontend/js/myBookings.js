@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', async () => {
+
+    if(!localStorage.getItem('token')){
+        window.location.href = '/html/login.html';
+        return;
+    }
+    document.body.style.display = 'block';
     // Setup navigation first
     setupNavigation();
 

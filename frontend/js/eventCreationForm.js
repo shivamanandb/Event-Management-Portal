@@ -76,6 +76,15 @@
          alert('Failed to create event: ' + error.message);
      }
  });
+
+ document.addEventListener('DOMContentLoaded', () => {
+     // Check if user is logged in
+     if (!localStorage.getItem('token')) {
+         window.location.href = '/html/login.html';
+         return;
+     }
+     document.body.style.display = 'block';
+ });
  
  // Set min date for event date inputs to today
  const today = new Date();

@@ -90,3 +90,12 @@ form.addEventListener('submit', async (e) => {
         submitButton.disabled = false;
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    if(localStorage.getItem('token')){
+        window.location.href = '/html/homepage.html';
+        return;
+    }
+    document.body.style.display = 'block';
+})

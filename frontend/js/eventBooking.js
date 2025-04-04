@@ -6,6 +6,13 @@ function getEventId() {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
+
+    if(!localStorage.getItem('token')){
+        window.location.href = '/html/login.html';
+        return;
+    }
+    document.body.style.display = 'block';
+
     const decreaseBtn = document.getElementById('decrease-btn');
     const increaseBtn = document.getElementById('increase-btn');
     const quantityDisplay = document.getElementById('quantity');

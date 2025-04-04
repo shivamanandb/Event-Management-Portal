@@ -54,9 +54,6 @@ function displayFilteredEvents(events, selectedCategory = '') {
         // Format start date and time
         const startDateTime = formatDateTime(event.eventDateTime);
 
-        // Create image path or use a default
-        // const imagePath = event.thumbnail
-
         // Safely handle seat information
         const totalSeats = event.totalSeats ? event.totalSeats : 0;
         const remainingSeats = event.remainingSeat !== undefined ? event.remainingSeat : 0;
@@ -135,6 +132,14 @@ function displayFilteredEvents(events, selectedCategory = '') {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
+
+    // Check if user is logged in
+    if (!localStorage.getItem('token')) {
+        window.location.href = '/html/login.html';
+        return;
+    }
+    document.body.style.display = 'block';
+
     // Initialize navigation
     const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');

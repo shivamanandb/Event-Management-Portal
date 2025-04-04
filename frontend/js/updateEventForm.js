@@ -42,6 +42,13 @@ function validateForm() {
 
 // Load event data when page loads
 document.addEventListener('DOMContentLoaded', async function() {
+
+    if(!localStorage.getItem('token')){
+        window.location.href = '/html/login.html';
+        return;
+    }
+    document.body.style.display = 'block';
+
     const eventId = getEventId();
     console.log("Event id: ", eventId)
     

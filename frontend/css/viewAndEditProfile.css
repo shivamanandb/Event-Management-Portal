@@ -9,6 +9,7 @@
 body {
     background-color: var(--background-color);
     color: var(--text-color);
+    display: none;;
     /* padding: 20px; */
 }
 

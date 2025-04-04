@@ -99,6 +99,15 @@ saveBtn.addEventListener('click', async() => {
 // Load user data when page loads
 document.addEventListener('DOMContentLoaded', () => {
     
+    if(!localStorage.getItem('token')){
+        window.location.href = '/html/login.html';
+        return;
+    }
+    document.body.style.display = 'block';
+
+    const token = localStorage.getItem('token');
+
+
     setupNavigation();
     populateUserData();
 });

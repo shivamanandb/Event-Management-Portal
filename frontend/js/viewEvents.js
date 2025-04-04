@@ -32,6 +32,13 @@ registerBtn.addEventListener('click', () => {
 // Load event data when page loads
 document.addEventListener('DOMContentLoaded', async() => {
     
+    // Check if user is logged in
+    if (!localStorage.getItem('token')) {
+        window.location.href = '/html/login.html';
+        return;
+    }
+    document.body.style.display = 'block';
+    
     // Getting eventId from parameter
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('id');
