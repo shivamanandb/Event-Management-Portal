@@ -43,10 +43,19 @@ function validateForm() {
 // Load event data when page loads
 document.addEventListener('DOMContentLoaded', async function() {
 
+    // check if token present or not
     if(!localStorage.getItem('token')){
         window.location.href = '/html/login.html';
         return;
     }
+
+    // check user role
+    if(JSON.parse(localStorage.getItem('user')).role != 'ORGANIZER'){
+        alert("You are not authorized to update an event.");
+        window.location.href = '/html/homepage.html';
+        return;
+    }
+
     document.body.style.display = 'block';
 
     const eventId = getEventId();

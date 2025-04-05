@@ -1,5 +1,7 @@
 package com.example.backend.configuration;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,15 +9,21 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.example.backend.models.UserRole;
 import com.example.backend.services.Implementation.UserDetailsServiceImpl;
 
 @Configuration
+@EnableMethodSecurity
 public class MySecurityConfig {
 
     @Autowired
@@ -46,40 +54,44 @@ public class MySecurityConfig {
         return daoAuthenticationProvider;
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
     // configuration
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Use the CORS configuration
                 .authorizeHttpRequests(authorize -> authorize
-                    
-                    .requestMatchers("/generate-token","/user/create-user","/events").permitAll()
-                    // .requestMatchers(HttpMethod.POST, "/user/create-order").hasRole("ATTENDEE")
-                    // .requestMatchers(HttpMethod.PUT, "/user/update-order").hasRole("ATTENDEE")
-                    // .requestMatchers(HttpMethod.POST, "/bookings/create-booking/{paymentReferenceId}").hasRole("ORGANIZER")
-                    // .requestMatchers(HttpMethod.GET, "/bookings/all/{id}").hasRole("ATTENDEE")
-                    // .requestMatchers(HttpMethod.PUT, "bookings/cancel/{bookingId}").hasRole("ATTENDEE")
-                    // .requestMatchers(HttpMethod.POST, "/events/create-event").hasRole("ORGANIZER")
-                    // .requestMatchers(HttpMethod.GET, "/events").hasRole("ATTENDEE")
-                    // .requestMatchers(HttpMethod.GET , "/events/category/{category}").hasRole("ATTENDEE")
-                    // .requestMatchers(HttpMethod.PUT, "/events/update/{id}").hasRole("ORGANIZER")
-                    // .requestMatchers(HttpMethod.GET, "/events/organizer/{userId}").hasRole("ORGANIZER")
-                    // .requestMatchers(HttpMethod.DELETE, "/events/{eventId}").hasRole("ORGANIZER")
-                    // .requestMatchers(HttpMethod.PUT, "/eventDetails/save-event").hasRole("ORGANIZER")
-                    // .requestMatchers(HttpMethod.GET, "/eventDetails/get-events/{id}").hasRole("ORGANIZER")
-                    .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                    .requestMatchers("/generate-token", "/user/create-user", "/events").permitAll()
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow preflight requests
+                    .requestMatchers(HttpMethod.POST, "/user/create-order").hasAuthority("ATTENDEE")
+                    .requestMatchers(HttpMethod.PUT, "/user/update-order").hasAuthority("ATTENDEE")
+                    .requestMatchers(HttpMethod.POST, "/bookings/create-booking/{paymentReferenceId}").hasAuthority("ATTENDEE")
+                    .requestMatchers(HttpMethod.GET, "/bookings/all/{id}").hasAuthority("ATTENDEE")
+                    .requestMatchers(HttpMethod.PUT, "/bookings/cancel/{bookingId}").hasAuthority("ATTENDEE")
+                    .requestMatchers(HttpMethod.POST, "/events").hasAuthority("ATTENDEE")
+                    .requestMatchers(HttpMethod.POST, "/events/create-event").hasAuthority("ORGANIZER")
+                    .requestMatchers(HttpMethod.GET, "/events//getEnrolledPeople/{eventId}").hasAuthority("ORGANIZER")
+                    .requestMatchers(HttpMethod.PUT, "/events/update/{id}").hasAuthority("ORGANIZER")
+                    .requestMatchers(HttpMethod.GET, "/events/organizer/{userId}").hasAuthority("ORGANIZER")                    
+                    .requestMatchers(HttpMethod.DELETE, "/events/{eventId}").hasAuthority("ORGANIZER")
                     .anyRequest().authenticated())
+                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-                    .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(unauthorizedHandler))
-                    
-                    .sessionManagement((session) -> session
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        http
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         
         return http.build();
-
     }
 }

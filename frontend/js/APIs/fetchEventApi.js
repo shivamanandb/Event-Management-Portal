@@ -23,6 +23,7 @@ const fetchEvents = async(token) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             });
             loader.remove();

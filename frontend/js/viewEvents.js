@@ -37,6 +37,13 @@ document.addEventListener('DOMContentLoaded', async() => {
         window.location.href = '/html/login.html';
         return;
     }
+
+    // check user role
+    if(JSON.parse(localStorage.getItem('user')).role != 'ATTENDEE'){
+        alert("Unauthorized Access !!.");
+        window.location.href = '/html/homepage.html';
+        return;
+    }
     document.body.style.display = 'block';
     
     // Getting eventId from parameter

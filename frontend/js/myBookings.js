@@ -1,9 +1,18 @@
 document.addEventListener('DOMContentLoaded', async () => {
 
+    // check token is available or not
     if(!localStorage.getItem('token')){
         window.location.href = '/html/login.html';
         return;
     }
+
+    // check user role
+    if(JSON.parse(localStorage.getItem('user')).role != 'ATTENDEE'){
+        alert("Unauthorized Access !!.");
+        window.location.href = '/html/homepage.html';
+        return;
+    }
+
     document.body.style.display = 'block';
     // Setup navigation first
     setupNavigation();

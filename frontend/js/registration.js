@@ -93,9 +93,11 @@ form.addEventListener('submit', async (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // check if token present or not 
     if(localStorage.getItem('token')){
         window.location.href = '/html/homepage.html';
         return;
     }
+
     document.body.style.display = 'block';
 })

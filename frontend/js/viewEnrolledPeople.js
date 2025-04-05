@@ -8,10 +8,19 @@ function getEventId() {
 
 document.addEventListener('DOMContentLoaded', async () => {
 
+    // check token available or not
     if(!localStorage.getItem('token')){
         window.location.href = '/html/login.html';
         return;
     }
+
+    // check user role
+    if(JSON.parse(localStorage.getItem('user')).role != 'ORGANIZER'){
+        alert("Unauthorized Access !!.");
+        window.location.href = '/html/homepage.html';
+        return;
+    }
+
     document.body.style.display = 'block';
 
     setupNavigation();

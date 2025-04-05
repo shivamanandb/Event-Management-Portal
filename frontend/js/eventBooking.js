@@ -7,10 +7,19 @@ function getEventId() {
 
 document.addEventListener('DOMContentLoaded', async function () {
 
+    // check token available or not
     if(!localStorage.getItem('token')){
         window.location.href = '/html/login.html';
         return;
     }
+
+    // check the user is ATTENDEE or not 
+    if(JSON.parse(localStorage.getItem('user')).role != 'ATTENDEE'){
+        alert("You are not authorized to book an event.");
+        window.location.href = '/html/homepage.html';
+        return;
+    }
+
     document.body.style.display = 'block';
 
     const decreaseBtn = document.getElementById('decrease-btn');

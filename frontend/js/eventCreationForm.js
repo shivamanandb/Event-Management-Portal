@@ -83,6 +83,12 @@
          window.location.href = '/html/login.html';
          return;
      }
+
+     if(JSON.parse(localStorage.getItem('user')).role != 'ORGANIZER'){
+         alert("You are not authorized to create an event.");
+         window.location.href = '/html/homepage.html';
+         return;
+     }
      document.body.style.display = 'block';
  });
  

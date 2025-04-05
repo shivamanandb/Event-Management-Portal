@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;  
 
+    @PreAuthorize("hasAuthority('ATTENDEE')")
     @PostMapping("/create-booking/{paymentReferenceId}")
     public ResponseEntity<Booking> createBooking(
             @PathVariable("paymentReferenceId") String paymentReferenceId,
@@ -35,12 +37,14 @@ public class BookingController {
         return ResponseEntity.ok(currBooking);
     }
 
+    @PreAuthorize("hasAuthority('ATTENDEE')")
     @GetMapping("/all/{id}")
     public Set<Booking> getAllBookings(@PathVariable("id") Long userId){ 
-
+        System.out.println("userId : dd: " + userId);
         return this.bookingService.getAllBookings(userId);
     }
 
+    @PreAuthorize("hasAuthority('ATTENDEE')")
     @PutMapping("/cancel/{bookingId}")
     public Booking cancelBooking(@PathVariable("bookingId") Long bookingId){
         return this.bookingService.cancelBooking(bookingId);

@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -43,7 +44,6 @@ public class AuthenticateController {
     // generate token
     @PostMapping("/generate-token")
     public ResponseEntity<?> generateToken(@RequestBody JwtRequest jwtRequest) throws Exception {
-        System.out.println("jwtRequest: "+jwtRequest.getEmail() + " " + jwtRequest.getPassword());
         try {
 
             authenticate(jwtRequest.getEmail(), jwtRequest.getPassword());
