@@ -22,7 +22,6 @@ import com.example.backend.models.Event;
 import com.example.backend.services.EventService;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/events")
 public class EventController {
 

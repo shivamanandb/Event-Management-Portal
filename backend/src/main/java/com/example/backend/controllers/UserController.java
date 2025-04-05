@@ -34,7 +34,6 @@ import com.example.backend.models.User;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin("*")
 public class UserController {
 
     @Autowired

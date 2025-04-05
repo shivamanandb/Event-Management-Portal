@@ -1,5 +1,7 @@
 /* Reset and base styles */
 * {
+    /* position: fixed; */
+    /* top: 0; */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -14,12 +16,16 @@ body {
 /* Header styles */
 header {
     width: 100%;
+    z-index: 10;
+    top: 0;
     display: flex;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
     justify-content: space-between;
     align-items: center;
     padding: 1rem 10%;
     background-color: #fff;
     position: relative;
+    position: fixed;
 }
 
 /* Logo container styles */

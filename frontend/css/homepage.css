@@ -3,6 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 80px;
     padding: 1rem 10%;
 }
 
@@ -258,4 +259,3 @@
     }
 }
 
-/* ******************************************************* */

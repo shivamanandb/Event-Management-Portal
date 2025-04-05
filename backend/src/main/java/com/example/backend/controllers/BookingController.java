@@ -19,7 +19,6 @@ import com.example.backend.models.Booking;
 import com.example.backend.services.BookingService;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/bookings")
 public class BookingController {
    

@@ -26,7 +26,6 @@ import com.example.backend.models.User;
 import com.example.backend.services.Implementation.UserDetailsServiceImpl;
 
 @RestController
-@CrossOrigin("*")
 public class AuthenticateController {
 
     @Autowired

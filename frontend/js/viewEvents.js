@@ -20,7 +20,7 @@ function populateEventData(eventData) {
     eventStartTime.textContent = `${startDateTime.date} | ${startDateTime.time}`
     eventEndTime.textContent = `${endDateTime.date} | ${endDateTime.time}`
     eventLocation.textContent = eventData.location;
-    eventPrice.textContent = eventData.price;
+    eventPrice.textContent = eventData.price + ' Rs.';
     eventOrganizer.textContent = eventData?.organizerDetails?.organizationName;
 }
 
