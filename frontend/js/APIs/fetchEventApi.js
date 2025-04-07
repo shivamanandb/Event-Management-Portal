@@ -35,10 +35,7 @@ const fetchEvents = async(token) => {
             
             return await response.json();
             
-            // Store events as JSON string
-            if(data){
-                localStorage.setItem('events', JSON.stringify(data));
-            }
+            
         } else if(user && user.role == 'ORGANIZER') {
             const response = await fetch(`http://localhost:8080/events/organizer/${user.id}`, {
                 method: 'GET',

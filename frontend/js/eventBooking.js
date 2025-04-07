@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const events = await fetchEvents(token);
     const event = events.find(e => e.id == eventId);
 
+    const keyId = await paymentKeyResponse();   
+
     if (!event) {
         console.error("Event not found!");
         return;
@@ -109,9 +111,10 @@ document.addEventListener('DOMContentLoaded', async function () {
             const data = await createOrderApi(amount, token)
 
             if (data.status === "created") {
+
                 // Open payment form
                 let options = {
-                    key: 'rzp_test_V8mM0kjKmdKKSA',
+                    key: keyId,
                     amount: data.amount,
                     currency: 'INR',
                     name: 'EventHub',

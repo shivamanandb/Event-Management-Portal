@@ -2,8 +2,6 @@ package com.example.backend.services;
 
 import java.security.Principal;
 
-import org.springframework.http.ResponseEntity;
-
 import com.example.backend.DTOs.UpdateUserDTO;
 import com.example.backend.models.User;
 

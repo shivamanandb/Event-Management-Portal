@@ -2,7 +2,7 @@ const updateOrder = async(orderData) => {
 
     const token = localStorage.getItem('token')
     // Update order status
-    const orderResponse = await fetch('http://localhost:8080/user/update-order', {
+    const orderResponse = await fetch('http://localhost:8080/payment/update-order', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

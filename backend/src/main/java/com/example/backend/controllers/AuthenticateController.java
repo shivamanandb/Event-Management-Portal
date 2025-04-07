@@ -4,14 +4,12 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,7 +51,7 @@ public class AuthenticateController {
             throw new Exception("User not found");
         }
 
-        /////// authenticate
+        // authenticate
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtRequest.getEmail());
         String token = this.jwtUtils.generateToken(userDetails);
         System.out.println("Token: "+ token);

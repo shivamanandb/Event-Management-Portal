@@ -73,17 +73,18 @@ public class MySecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers("/generate-token", "/user/create-user", "/events").permitAll()
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow preflight requests
-                    .requestMatchers(HttpMethod.POST, "/user/create-order").hasAuthority("ATTENDEE")
-                    .requestMatchers(HttpMethod.PUT, "/user/update-order").hasAuthority("ATTENDEE")
+                    .requestMatchers(HttpMethod.POST, "/payment/create-order").hasAuthority("ATTENDEE")
+                    .requestMatchers(HttpMethod.PUT, "/payment/update-order").hasAuthority("ATTENDEE")
                     .requestMatchers(HttpMethod.POST, "/bookings/create-booking/{paymentReferenceId}").hasAuthority("ATTENDEE")
                     .requestMatchers(HttpMethod.GET, "/bookings/all/{id}").hasAuthority("ATTENDEE")
                     .requestMatchers(HttpMethod.PUT, "/bookings/cancel/{bookingId}").hasAuthority("ATTENDEE")
-                    .requestMatchers(HttpMethod.POST, "/events").hasAuthority("ATTENDEE")
+                    .requestMatchers(HttpMethod.GET, "/events").hasAuthority("ATTENDEE")
                     .requestMatchers(HttpMethod.POST, "/events/create-event").hasAuthority("ORGANIZER")
                     .requestMatchers(HttpMethod.GET, "/events//getEnrolledPeople/{eventId}").hasAuthority("ORGANIZER")
                     .requestMatchers(HttpMethod.PUT, "/events/update/{id}").hasAuthority("ORGANIZER")
                     .requestMatchers(HttpMethod.GET, "/events/organizer/{userId}").hasAuthority("ORGANIZER")                    
                     .requestMatchers(HttpMethod.DELETE, "/events/{eventId}").hasAuthority("ORGANIZER")
+                    .requestMatchers(HttpMethod.GET, "/payment/razorpay-key").hasAuthority("ATTENDEE")
                     .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

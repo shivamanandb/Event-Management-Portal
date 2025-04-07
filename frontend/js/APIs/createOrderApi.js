@@ -1,6 +1,6 @@
 const createOrderApi = async (amount, token) => {
 
-    const response = await fetch('http://localhost:8080/user/create-order', {
+    const response = await fetch('http://localhost:8080/payment/create-order', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
